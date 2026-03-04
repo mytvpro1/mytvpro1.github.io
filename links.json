@@ -1,22 +1,22 @@
 [
     {
         "name": "beIN Sports 1",
-        "url": "تحدث تلقائياً",
+        "url": "https://example.com/live1.m3u8",
         "lang": "AR"
     },
     {
-        "name": "TF1 FR",
-        "url": "تحدث تلقائياً",
-        "lang": "FR"
+        "name": "beIN Sports 2",
+        "url": "https://example.com/live2.m3u8",
+        "lang": "AR"
     },
     {
-        "name": "Ziggo Sport",
-        "url": "تحدث تلقائياً",
+        "name": "NOS Sport",
+        "url": "https://example.com/nl1.m3u8",
         "lang": "NL"
     },
     {
-        "name": "Sky Sports",
-        "url": "تحدث تلقائياً",
-        "lang": "EN"
+        "name": "TF1 France",
+        "url": "https://example.com/fr1.m3u8",
+        "lang": "FR"
     }
 ]
