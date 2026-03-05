@@ -1,17 +1,33 @@
 import json
 
 def sniper_engine():
-    # قائمة القنوات الأساسية لموقع Simo Final
-    channels = [
-        {"name": "beIN Sports 1", "url": "https://example.com/bein1.m3u8", "lang": "AR"},
-        {"name": "NOS Sport (NL)", "url": "https://example.com/nos_nl.m3u8", "lang": "NL"},
-        {"name": "TF1 France (FR)", "url": "https://example.com/tf1_fr.m3u8", "lang": "FR"}
-    ]
+    # هذه الهيكلية مطابقة تماماً لما يبحث عنه كود الـ JavaScript في موقعك
+    data = {
+        "ar_sport": [
+            {"name": "beIN Sports 1", "url": "https://example.com/bein1.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/BeIN_Sports_logo.svg/2560px-BeIN_Sports_logo.svg.png"},
+            {"name": "beIN Sports 2", "url": "https://example.com/bein2.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/BeIN_Sports_logo.svg/2560px-BeIN_Sports_logo.svg.png"}
+        ],
+        "ar_news": [
+            {"name": "Al Jazeera", "url": "https://example.com/jazeera.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Aljazeera_eng.svg/1200px-Aljazeera_eng.svg.png"}
+        ],
+        "en_sport": [
+            {"name": "Sky Sports", "url": "https://example.com/sky.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=SKY"}
+        ],
+        "fr_sport": [
+            {"name": "TF1 France", "url": "https://example.com/tf1.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=TF1"}
+        ],
+        "nl_sport": [
+            {"name": "NOS Sport", "url": "https://example.com/nos.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=NOS"}
+        ],
+        "de_sport": [
+            {"name": "Sky Sport DE", "url": "https://example.com/skyde.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=DE"}
+        ]
+    }
     
     with open('links.json', 'w', encoding='utf-8') as f:
-        json.dump(channels, f, ensure_ascii=False, indent=4)
+        json.dump(data, f, ensure_ascii=False, indent=4)
     
-    print("✅ القنوات عادت للحياة في links.json")
+    print("✅ تم ترتيب الروابط لتتوافق مع تصميم MYTVPRO")
 
 if __name__ == "__main__":
     sniper_engine()
