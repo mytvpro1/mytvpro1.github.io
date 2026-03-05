@@ -1,33 +1,33 @@
 import json
 
 def sniper_engine():
-    # هذه الهيكلية مطابقة تماماً لما يبحث عنه كود الـ JavaScript في موقعك
     data = {
         "ar_sport": [
-            {"name": "beIN Sports 1", "url": "https://example.com/bein1.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/BeIN_Sports_logo.svg/2560px-BeIN_Sports_logo.svg.png"},
-            {"name": "beIN Sports 2", "url": "https://example.com/bein2.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/BeIN_Sports_logo.svg/2560px-BeIN_Sports_logo.svg.png"}
+            {
+                "name": "beIN Sports 1",
+                # هذا رابط بث مباشر حقيقي للتجربة فقط
+                "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", 
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/BeIN_Sports_logo.svg/2560px-BeIN_Sports_logo.svg.png"
+            },
+            {
+                "name": "beIN Sports 2",
+                "url": "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/BeIN_Sports_logo.svg/2560px-BeIN_Sports_logo.svg.png"
+            }
         ],
         "ar_news": [
-            {"name": "Al Jazeera", "url": "https://example.com/jazeera.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Aljazeera_eng.svg/1200px-Aljazeera_eng.svg.png"}
-        ],
-        "en_sport": [
-            {"name": "Sky Sports", "url": "https://example.com/sky.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=SKY"}
-        ],
-        "fr_sport": [
-            {"name": "TF1 France", "url": "https://example.com/tf1.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=TF1"}
-        ],
-        "nl_sport": [
-            {"name": "NOS Sport", "url": "https://example.com/nos.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=NOS"}
-        ],
-        "de_sport": [
-            {"name": "Sky Sport DE", "url": "https://example.com/skyde.m3u8", "logo": "https://via.placeholder.com/60/ff3b5c?text=DE"}
+            {
+                "name": "الجزيرة مباشر",
+                "url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8",
+                "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Aljazeera_eng.svg/1200px-Aljazeera_eng.svg.png"
+            }
         ]
     }
     
     with open('links.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
-    print("✅ تم ترتيب الروابط لتتوافق مع تصميم MYTVPRO")
+    print("✅ تم وضع روابط بث حقيقية للتجربة")
 
 if __name__ == "__main__":
     sniper_engine()
