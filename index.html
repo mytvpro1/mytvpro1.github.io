@@ -44,7 +44,6 @@
         .movie-card img { width: 100%; height: 220px; object-fit: cover; }
         .movie-title { padding: 12px; font-size: 13px; text-align: center; font-weight: bold; }
         
-        /* تصميم المشغل المطور لدعم التمرير الكامل */
         #videoPlayerContainer { 
             display: none; 
             position: fixed; 
@@ -55,7 +54,7 @@
             backdrop-filter: blur(10px); 
             overflow-y: scroll; 
             -webkit-overflow-scrolling: touch; 
-            padding: 40px 0 100px 0; /* مساحة 100px في الأسفل لضمان ظهور اخلاء المسؤولية */
+            padding: 40px 0 100px 0; 
             text-align: center;
         }
 
@@ -101,8 +100,9 @@
             <script type="text/javascript" src="https://millionairelucidlytransmitted.com/fcadb7a0b59fe79d927910b67b40138d/invoke.js"></script>
         </div>
 
-        <iframe id="mainPlayer" src="" allowfullscreen style="display:none; border:none; margin:0 auto;"></iframe>
-        <video id="liveVideoPlayer" controls style="display:none; margin:0 auto;"></video>
+        <iframe id="mainPlayer" src="" allowfullscreen style="display:none; border:none; margin:0 auto; width:90%; height:50vh; border-radius:15px;"></iframe>
+        
+        <video id="liveVideoPlayer" controls playsinline poster="https://via.placeholder.com/800x450/0b0e11/ff3b5c?text=Loading+Stream..." style="display:none; margin:0 auto;"></video>
 
         <div class="ad-banner-box">
             <script type="text/javascript">
@@ -232,6 +232,7 @@
             } catch (e) { grid.innerHTML = "Error!"; }
         }
 
+        /* --- نظام تشغيل البث المباشر المطور لسيمو --- */
         function startStream(url) {
             closeChannelsModal();
             document.getElementById('mainPlayer').style.display = 'none';
@@ -239,14 +240,40 @@
             video.style.display = 'block';
             const container = document.getElementById('videoPlayerContainer');
             container.style.display = 'block'; 
-            container.scrollTop = 0; // تصفير التمرير عند الفتح
-            if (hlsPlayer) { hlsPlayer.destroy(); }
+            container.scrollTop = 0;
+
+            if (hlsPlayer) { 
+                hlsPlayer.destroy(); 
+                hlsPlayer = null;
+            }
+
+            // التحقق من دعم HLS.js (لمعظم متصفحات الأندرويد والكروم)
             if (Hls.isSupported()) {
-                hlsPlayer = new Hls();
+                hlsPlayer = new Hls({
+                    xhrSetup: function(xhr) { xhr.withCredentials = false; }
+                });
                 hlsPlayer.loadSource(url);
                 hlsPlayer.attachMedia(video);
-                hlsPlayer.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-            } else { video.src = url; video.play(); }
+                hlsPlayer.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play().catch(e => console.log("Auto-play blocked"));
+                });
+                hlsPlayer.on(Hls.Events.ERROR, function (event, data) {
+                    if (data.fatal) {
+                        switch (data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR: hlsPlayer.startLoad(); break;
+                            case Hls.ErrorTypes.MEDIA_ERROR: hlsPlayer.recoverMediaError(); break;
+                            default: hlsPlayer.destroy(); break;
+                        }
+                    }
+                });
+            } 
+            // الدعم المباشر لمتصفح Safari و iPhone
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.addEventListener('loadedmetadata', () => {
+                    video.play();
+                });
+            }
         }
 
         async function loadContent(type) {
@@ -272,7 +299,7 @@
             player.src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             const container = document.getElementById('videoPlayerContainer');
             container.style.display = 'block'; 
-            container.scrollTop = 0; // تصفير التمرير عند الفتح
+            container.scrollTop = 0;
         }
 
         function closePlayer() {
@@ -280,8 +307,10 @@
             container.style.display = 'none';
             document.getElementById('mainPlayer').src = '';
             const video = document.getElementById('liveVideoPlayer');
-            video.pause(); video.src = "";
-            container.scrollTop = 0; // تصفير التمرير عند الإغلاق
+            video.pause(); 
+            video.src = "";
+            if (hlsPlayer) { hlsPlayer.destroy(); hlsPlayer = null; }
+            container.scrollTop = 0;
         }
 
         async function handleSearch(event) {
