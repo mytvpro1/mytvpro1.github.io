@@ -18,27 +18,12 @@
         .lang-btn { color: #ff3b5c; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.3s; text-transform: uppercase; }
         .lang-btn.active { color: #ffffff; border-bottom: 2px solid #ff3b5c; }
 
-        /* الزر الجديد الجذاب بجانب اللغات */
         .quick-live-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 59, 92, 0.1);
-            border: 1px solid #ff3b5c;
-            padding: 6px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-right: 5px;
-            animation: pulse-red 2s infinite;
-            color: #ff3b5c;
+            display: flex; align-items: center; gap: 8px; background: rgba(255, 59, 92, 0.1);
+            border: 1px solid #ff3b5c; padding: 6px 15px; border-radius: 20px; cursor: pointer;
+            transition: 0.3s; margin-right: 5px; animation: pulse-red 2s infinite; color: #ff3b5c;
         }
-        .quick-live-btn:hover {
-            background: #ff3b5c;
-            color: white;
-            box-shadow: 0 0 15px rgba(255, 59, 92, 0.5);
-        }
-        .quick-live-btn span { font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .quick-live-btn span { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
         .arrow-icon { font-size: 14px; transition: 0.3s; }
         .quick-live-btn:hover .arrow-icon { transform: translateX(5px); }
 
@@ -74,8 +59,30 @@
         .movie-card img { width: 100%; height: 220px; object-fit: cover; }
         .movie-title { padding: 12px; font-size: 13px; text-align: center; font-weight: bold; }
         
-        #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 4000; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        #mainPlayer, #liveVideoPlayer { width: 90%; max-width: 800px; height: 50vh; border: 3px solid #ff3b5c; border-radius: 15px; background: #000; box-shadow: 0 0 30px rgba(255, 59, 92, 0.4); }
+        /* تصميم صفحة المشغل المطور */
+        #videoPlayerContainer { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); z-index: 4000; flex-direction: column; 
+            align-items: center; justify-content: flex-start; backdrop-filter: blur(8px);
+            overflow-y: auto; padding: 20px 0;
+        }
+        #mainPlayer, #liveVideoPlayer { 
+            width: 90%; max-width: 800px; height: 50vh; border: 3px solid #ff3b5c; 
+            border-radius: 15px; background: #000; box-shadow: 0 0 30px rgba(255, 59, 92, 0.4); 
+        }
+
+        /* حاويات الإعلانات */
+        .ad-slot {
+            width: 90%; max-width: 800px; min-height: 90px; background: #16191d;
+            margin: 15px 0; border: 1px dashed #333; display: flex; align-items: center;
+            justify-content: center; color: #444; font-size: 12px; border-radius: 10px;
+        }
+
+        /* إخلاء المسؤولية المطور أسفل المشغل */
+        .player-footer { 
+            width: 90%; max-width: 800px; margin-top: 30px; padding-bottom: 40px;
+            border-top: 1px solid #222; padding-top: 20px;
+        }
 
         .disclaimer-section { background: #1a1d21; border-top: 2px solid #ff3b5c; padding: 30px 5%; margin-top: 50px; font-size: 12px; color: #888; line-height: 1.6; }
         .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
@@ -99,8 +106,26 @@
 
     <div id="videoPlayerContainer">
         <button class="tab" style="margin-bottom:15px; background:#1a1d21; border:1px solid #ff3b5c;" id="backBtn" onclick="closePlayer()">BACK</button>
+        
+        <div class="ad-slot">ADVERTISEMENT - TOP SLOT</div>
+
         <iframe id="mainPlayer" src="" allowfullscreen style="display:none; border:none;"></iframe>
         <video id="liveVideoPlayer" controls style="display:none;"></video>
+
+        <div class="ad-slot">ADVERTISEMENT - BOTTOM SLOT</div>
+
+        <div class="player-footer">
+            <div class="disclaimer-grid">
+                <div class="disclaimer-box">
+                    <h4>Disclaimer (EN)</h4>
+                    <p style="font-size: 11px; color:#666;">MYTVPRO does not host or upload any video files. All content is found freely available on the internet via third-party providers.</p>
+                </div>
+                <div class="disclaimer-box">
+                    <h4>Avertissement (FR)</h4>
+                    <p style="font-size: 11px; color:#666;">MYTVPRO n'héberge ni ne télécharge aucun fichier vidéo. Tout le contenu est disponible gratuitement sur Internet via des tiers.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="header">
@@ -111,7 +136,7 @@
         </div>
         <div class="lang-container">
             <div class="quick-live-btn" onclick="openChannelsModal()">
-                <span>LIVE TV</span>
+                <span id="quickLiveText">CHANNELS LANG</span>
                 <b class="arrow-icon">➔</b>
             </div>
             
@@ -125,7 +150,7 @@
     <div class="live-section">
         <div class="main-live-selector" onclick="openChannelsModal()">
             <span class="live-dot"></span>
-            <span id="liveTxt">Select Live Channel / LIVE TV</span>
+            <span id="liveTxt">Select Live Channel</span>
         </div>
     </div>
 
@@ -139,7 +164,7 @@
         <div class="disclaimer-grid">
             <div class="disclaimer-box">
                 <h4>Disclaimer (EN)</h4>
-                <p>MYTVPRO does not host or upload any video files or media content. All stream links provided are found freely available on the internet. We only act as a search engine and organizer for publicly accessible content.</p>
+                <p>MYTVPRO does not host or upload any video files or media content. All stream links provided are found freely available on the internet.</p>
             </div>
             <div class="disclaimer-box">
                 <h4>Avertissement (FR)</h4>
@@ -155,13 +180,13 @@
         const API_KEY = '715fb05852af662217013d8380237f2a';
         const JSON_FILE = "links.json"; 
         let currentType = 'movie', currentLang = 'en', hlsPlayer = null;
-        let isLivePlayback = false; // المتغير الذكي للرجوع للمكان الصحيح
+        let isLivePlayback = false;
 
         const translations = {
-            en: { movies: "Movies", series: "Series", live: "Select Live Channel", search: "Search here...", back: "Back", sport: "Sports", news: "News" },
-            fr: { movies: "Films", series: "Séries", live: "Choisir la chaîne", search: "Chercher ici...", back: "Retour", sport: "Sports", news: "Infos" },
-            de: { movies: "Filme", series: "Serien", live: "Kanal wählen", search: "Hier suchen...", back: "Zurück", sport: "Sport", news: "News" },
-            nl: { movies: "Films", series: "Series", live: "Kies Kanaal", search: "Zoek hier...", back: "Terug", sport: "Sport", news: "Nieuws" }
+            en: { movies: "Movies", series: "Series", live: "Select Live Channel", quickLive: "CHANNELS LANG", search: "Search here...", back: "Back", sport: "Sports", news: "News" },
+            fr: { movies: "Films", series: "Séries", live: "Choisir la chaîne", quickLive: "LANGUE CHAINES", search: "Chercher ici...", back: "Retour", sport: "Sports", news: "Infos" },
+            de: { movies: "Filme", series: "Serien", live: "Kanal wählen", quickLive: "KANAL SPRACHE", search: "Hier suchen...", back: "Zurück", sport: "Sport", news: "News" },
+            nl: { movies: "Films", series: "Series", live: "Kies Kanaal", quickLive: "ZENDER TAAL", search: "Zoek hier...", back: "Terug", sport: "Sport", news: "Nieuws" }
         };
 
         function changeLanguage(lang) {
@@ -172,6 +197,7 @@
             document.getElementById('btnMovies').innerText = t.movies;
             document.getElementById('btnSeries').innerText = t.series;
             document.getElementById('liveTxt').innerText = t.live;
+            document.getElementById('quickLiveText').innerText = t.quickLive;
             document.getElementById('searchInput').placeholder = t.search;
             document.getElementById('backBtn').innerText = t.back;
             loadContent(currentType);
@@ -260,10 +286,7 @@
             const video = document.getElementById('liveVideoPlayer');
             video.pause(); video.src = "";
             if (hlsPlayer) { hlsPlayer.destroy(); hlsPlayer = null; }
-
-            if (isLivePlayback) {
-                openChannelsModal();
-            }
+            if (isLivePlayback) { openChannelsModal(); }
         }
 
         async function handleSearch(event) {
@@ -282,7 +305,6 @@
                 } catch(e) {}
             }
         }
-
         window.onload = () => loadContent('movie');
     </script>
 </body>
