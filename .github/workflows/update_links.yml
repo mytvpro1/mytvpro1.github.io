@@ -1,34 +1,27 @@
-name: Simo Sniper Hourly Update
-
+name: Simo Sniper - Global Sports
 on:
   schedule:
-    - cron: '0 * * * *' # سيعمل تلقائياً كل ساعة
-  push:
-    branches: [ main ]
-  workflow_dispatch: # يتيح لك تشغيله يدوياً من GitHub
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
-  build:
+  update-links:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install Dependencies
-        run: pip install requests
-
-      - name: Run Sniper Script
-        run: python sniper_script.py
-
-      - name: Commit and Push Changes
+      - name: Sniping Links
         run: |
-          git config --global user.name "Simo-Sniper-Bot"
-          git config --global user.email "actions@github.com"
+          echo '{"en_sport": [' > links.json
+          echo '{"name": "Paramount+ HD", "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Paramount_Plus.svg"},' >> links.json
+          echo '{"name": "EuroSport 1", "url": "https://index.iptv.ovh/eurosport1.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Eurosport_logo.svg"}' >> links.json
+          echo '], "en_news": []}' >> links.json
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Simo-Sniper"
+          git config --global user.email "simo@mytvpro.com"
           git add links.json
-          git commit -m "🚀 Sniper: Auto-update links $(date)" || echo "No changes to commit"
+          git commit -m "Simo Sniper: Global Sports Updated" || exit 0
           git push
