@@ -1,36 +1,23 @@
 import json
-import os
 
-# قاعدة البيانات التي سنعيد بناءها (Simo Final)
-SIMO_DATABASE = {
-    "Sports": [
-        {"name": "Paramount+ HD", "logo": "https://example.com/paramount.png", "url": "رابط_قناة_باراماونت"},
-        {"name": "EuroSport 1", "logo": "https://example.com/eurosport.png", "url": "رابط_يوروسبورت"},
-        # سنضيف روابط beIN Sports هنا عبر القناص
-    ],
-    "beIN_Sports": [],
-    "News": []
-}
+def main():
+    # هذه هي قاعدة البيانات التي سيقرأها الـ index.html
+    simo_final_data = {
+        "beIN_Sports": [
+            {"name": "beIN Sports 1 HD", "url": "رابط_القناة_هنا", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/BeIN_Sports_1_logo.svg/1024px-BeIN_Sports_1_logo.svg.png"},
+            {"name": "beIN Sports 2 HD", "url": "رابط_القناة_هنا", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/BeIN_Sports_2_logo.svg/1024px-BeIN_Sports_2_logo.svg.png"}
+        ],
+        "fr_sport": [
+            {"name": "Eurosport 1", "url": "https://index.iptv.ovh/eurosport1.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Eurosport_logo.svg/1024px-Eurosport_logo.svg.png"},
+            {"name": "Paramount+ HD", "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Paramount_Plus_logo.svg/1024px-Paramount_Plus_logo.svg.png"}
+        ],
+        "Sports": []
+    }
 
-def sniper_engine():
-    """محرك القناص للبحث عن روابط beIN والروابط الدولية"""
-    print("🎯 Sniping International & beIN Links...")
-    # هنا نضع المنطق الذي يجلب الروابط الحية
-    # حالياً سنضع روابط تجريبية لضمان عمل الملف
-    new_bein = [
-        {"name": "beIN Sports 1", "url": "https://server.com/live/bein1/index.m3u8", "logo": "https://bit.ly/bein_logo"},
-        {"name": "beIN Sports 2", "url": "https://server.com/live/bein2/index.m3u8", "logo": "https://bit.ly/bein_logo"}
-    ]
-    return new_bein
-
-def save_database():
-    bein_links = sniper_engine()
-    SIMO_DATABASE["beIN_Sports"] = bein_links
-    
-    # حفظ الملف بصيغة JSON ليقرأه الموقع
+    # كتابة الملف بصيغة JSON
     with open('links.json', 'w', encoding='utf-8') as f:
-        json.dump(SIMO_DATABASE, f, ensure_ascii=False, indent=4)
-    print("✅ Simo Final Database updated successfully!")
+        json.dump(simo_final_data, f, ensure_ascii=False, indent=4)
+    print("✅ links.json updated with beIN and International channels!")
 
 if __name__ == "__main__":
-    save_database()
+    main()
