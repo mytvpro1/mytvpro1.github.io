@@ -1,6 +1,1 @@
-self.options = {
-    "domain": "5gvci.com",
-    "zoneId": 10696293
-}
-self.lary = ""
-importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw')
+<meta name="monetag" content="713269932f9e6998423e0592d22c4429">
