@@ -1,48 +1,34 @@
 import json
 
-def generate_links():
-    # هذه هي قاعدة البيانات التي يحتاجها موقعك الجديد (en_sport و en_news)
-    data = {
+def get_international_database():
+    return {
         "en_sport": [
-            {
-                "name": "beIN Sports 1 HD",
-                "url": "https://example.com/live/bein1.m3u8", # القناص سيحدث هذا الرابط
-                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/BeIN_Sports_1_logo.svg/1024px-BeIN_Sports_1_logo.svg.png"
-            },
-            {
-                "name": "beIN Sports 2 HD",
-                "url": "https://example.com/live/bein2.m3u8",
-                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/BeIN_Sports_2_logo.svg/1024px-BeIN_Sports_2_logo.svg.png"
-            },
-            {
-                "name": "EuroSport 1 HD",
-                "url": "https://index.iptv.ovh/eurosport1.m3u8",
-                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Eurosport_logo.svg/1024px-Eurosport_logo.svg.png"
-            }
+            {"name": "Eurosport 1 (UK)", "url": "https://index.iptv.ovh/eurosport1.m3u8", "logo": "https://flagcdn.com/w160/gb.png"},
+            {"name": "Paramount+ Sport", "url": "https://pplus-ch-us.akamaized.net/hls/live/2097312/primary/index.m3u8", "logo": "https://flagcdn.com/w160/us.png"},
+            {"name": "Sky Sports News", "url": "https://skysports.com/live.m3u8", "logo": "https://flagcdn.com/w160/gb.png"}
         ],
         "en_news": [
-            {
-                "name": "Al Jazeera English",
-                "url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8",
-                "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Aljazeera_eng.svg/1024px-Aljazeera_eng.svg.png"
-            },
-            {
-                "name": "BBC News",
-                "url": "https://bbc-news.com/live.m3u8",
-                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/BBC_News_2019.svg/1024px-BBC_News_2019.svg.png"
-            }
+            {"name": "BBC World News", "url": "https://bbc-news.com/live.m3u8", "logo": "https://flagcdn.com/w160/gb.png"},
+            {"name": "ABC News USA", "url": "https://abc-us.com/live.m3u8", "logo": "https://flagcdn.com/w160/us.png"}
+        ],
+        "fr_sport": [
+            {"name": "20 Minutes TV (FR)", "url": "https://live-20minutestv.digiteka.com/1961167769/index.m3u8", "logo": "https://flagcdn.com/w160/fr.png"},
+            {"name": "Africa 24 Sport (FR)", "url": "https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8", "logo": "https://flagcdn.com/w160/fr.png"}
+        ],
+        "de_sport": [
+            {"name": "Deutsche Welle Sport", "url": "https://dw-amd-live.akamaized.net/hls/live/2014190/dwstreamae/index.m3u8", "logo": "https://flagcdn.com/w160/de.png"},
+            {"name": "Welt TV News", "url": "https://welt-live.akamaized.net/hls/live/2012345/welt/index.m3u8", "logo": "https://flagcdn.com/w160/de.png"}
+        ],
+        "nl_sport": [
+            {"name": "NOS Sport (NL)", "url": "https://nos-live.akamaized.net/hls/live/201234/nos/index.m3u8", "logo": "https://flagcdn.com/w160/nl.png"}
         ]
     }
-    return data
 
 def main():
-    # إنشاء ملف الروابط النهائي
-    final_data = generate_links()
-    
+    data = get_international_database()
     with open('links.json', 'w', encoding='utf-8') as f:
-        json.dump(final_data, f, ensure_ascii=False, indent=4)
-    
-    print("✅ Done! links.json synchronized with MYTVPRO Global Design.")
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    print("✅ تم تحديث القنوات الدولية (EN, FR, DE, NL) بنجاح!")
 
 if __name__ == "__main__":
     main()
