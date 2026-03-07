@@ -26,10 +26,11 @@
         .live-dot { height: 10px; width: 10px; background-color: #ff0000; border-radius: 50%; margin-right: 10px; animation: blink 1s infinite; }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; backdrop-filter: blur(5px); }
-        .channels-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 500px; max-height: 80vh; background: #1a1d21; border: 2px solid #ff3b5c; border-radius: 20px; z-index: 3001; padding: 25px; overflow-y: auto; }
+        .channels-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 600px; max-height: 85vh; background: #1a1d21; border: 2px solid #ff3b5c; border-radius: 20px; z-index: 3001; padding: 25px; overflow-y: auto; }
         
-        .cat-tabs { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; }
-        .cat-btn { background: #0b0e11; color: white; border: 1px solid #333; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s; flex: 1; text-align: center; }
+        /* تصميم أزرار الـ 8 خانات الجديدة */
+        .cat-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+        .cat-btn { background: #0b0e11; color: white; border: 1px solid #333; padding: 8px 2px; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: bold; transition: 0.3s; text-align: center; }
         .cat-btn.active { border-color: #ff3b5c; color: #ff3b5c; background: rgba(255, 59, 92, 0.1); }
         
         .channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
@@ -69,10 +70,19 @@
     <div id="modalOverlay" class="modal-overlay" onclick="closeChannelsModal()"></div>
     <div id="channelsModal" class="channels-modal">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h3 style="color:#ff3b5c; margin:0;" id="modalTitle">MYTVPRO LIVE</h3>
+            <h3 style="color:#ff3b5c; margin:0;" id="modalTitle">LIVE CHANNELS</h3>
             <button onclick="closeChannelsModal()" style="background:#ff3b5c; color:white; border:none; padding:5px 12px; border-radius:5px; cursor:pointer; font-weight:bold;">X</button>
         </div>
-        <div id="dynamicTabs" class="cat-tabs"></div>
+        <div id="dynamicTabs" class="cat-tabs">
+            <button class="cat-btn" id="btn-nf" onclick="loadCategory('news_fr', 'btn-nf')">NEWS FR</button>
+            <button class="cat-btn" id="btn-sf" onclick="loadCategory('sport_fr', 'btn-sf')">SPORT FR</button>
+            <button class="cat-btn" id="btn-se" onclick="loadCategory('sport_en', 'btn-se')">SPORT EN</button>
+            <button class="cat-btn" id="btn-ne" onclick="loadCategory('news_en', 'btn-ne')">NEWS EN</button>
+            <button class="cat-btn" id="btn-sd" onclick="loadCategory('sport_de', 'btn-sd')">SPORT DE</button>
+            <button class="cat-btn" id="btn-nd" onclick="loadCategory('news_de', 'btn-nd')">NEWS DE</button>
+            <button class="cat-btn" id="btn-sn" onclick="loadCategory('sport_nl', 'btn-sn')">SPORT NL</button>
+            <button class="cat-btn" id="btn-nn" onclick="loadCategory('news_nl', 'btn-nn')">NEWS NL</button>
+        </div>
         <div id="channelsGrid" class="channels-grid"></div>
     </div>
 
@@ -98,8 +108,8 @@
 
         <div style="width:90%; max-width:800px; padding:15px; border-top:1px solid #333; margin:20px auto; padding-bottom: 40px;">
             <div class="disclaimer-grid" style="font-size:10px; opacity:0.7;">
-                <div><b style="color:#ff3b5c;">EN:</b> Content is hosted by 3rd party servers. This site does not store any files.</div>
-                <div><b style="color:#ff3b5c;">FR:</b> Le contenu est hébergé par des serveurs tiers. Ce site ne stocke aucun fichier.</div>
+                <div><b style="color:#ff3b5c;">EN:</b> Content is hosted by 3rd party servers.</div>
+                <div><b style="color:#ff3b5c;">FR:</b> Le contenu est hébergé par des serveurs tiers.</div>
             </div>
         </div>
     </div>
@@ -135,11 +145,11 @@
         <div class="disclaimer-grid">
             <div class="disclaimer-box">
                 <h4>Disclaimer (EN)</h4>
-                <p>MYTVPRO does not host or upload any video files. All stream links are found freely available on the internet.</p>
+                <p>MYTVPRO does not host any video files. All stream links are found freely on the internet.</p>
             </div>
             <div class="disclaimer-box">
                 <h4>Avertissement (FR)</h4>
-                <p>MYTVPRO n'héberge ni ne télécharge aucun fichier vidéo. Tous les liens sont trouvés gratuitement sur Internet.</p>
+                <p>MYTVPRO n'héberge aucun fichier vidéo. Tous les liens sont trouvés gratuitement sur Internet.</p>
             </div>
         </div>
         <div style="text-align: center; margin-top: 20px; border-top: 1px solid #333; padding-top: 15px;">
@@ -173,10 +183,10 @@
         let currentType = 'movie', currentLang = 'en', hlsPlayer = null;
 
         const translations = {
-            en: { movies: "Movies", series: "Series", live: "Select Live Channel", search: "Search here...", back: "Back", sport: "Sports", news: "News" },
-            fr: { movies: "Films", series: "Séries", live: "Choisir la chaîne", search: "Chercher ici...", back: "Retour", sport: "Sports", news: "Infos" },
-            de: { movies: "Filme", series: "Serien", live: "Kanal wählen", search: "Hier suchen...", back: "Zurück", sport: "Sport", news: "News" },
-            nl: { movies: "Films", series: "Series", live: "Kies Kanaal", search: "Zoek hier...", back: "Terug", sport: "Sport", news: "Nieuws" }
+            en: { movies: "Movies", series: "Series", live: "Select Live Channel", search: "Search here...", back: "Back" },
+            fr: { movies: "Films", series: "Séries", live: "Choisir la chaîne", search: "Chercher ici...", back: "Retour" },
+            de: { movies: "Filme", series: "Serien", live: "Kanal wählen", search: "Hier suchen...", back: "Zurück" },
+            nl: { movies: "Films", series: "Series", live: "Kies Kanaal", search: "Zoek hier...", back: "Terug" }
         };
 
         function changeLanguage(lang) {
@@ -195,15 +205,8 @@
         function openChannelsModal() {
             document.getElementById('modalOverlay').style.display = 'block';
             document.getElementById('channelsModal').style.display = 'block';
-            updateModalTabs();
-        }
-
-        function updateModalTabs() {
-            const tabs = document.getElementById('dynamicTabs');
-            const t = translations[currentLang];
-            tabs.innerHTML = `<button class="cat-btn active" id="btn-sport" onclick="loadCategory('en_sport', 'btn-sport')">${t.sport}</button>
-                             <button class="cat-btn" id="btn-news" onclick="loadCategory('en_news', 'btn-news')">${t.news}</button>`;
-            loadCategory('en_sport', 'btn-sport');
+            // يفتح على أول قسم تلقائياً
+            loadCategory('news_fr', 'btn-nf');
         }
 
         function closeChannelsModal() {
@@ -214,42 +217,28 @@
         async function loadCategory(catKey, btnId) {
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             if(document.getElementById(btnId)) document.getElementById(btnId).classList.add('active');
+            
             const grid = document.getElementById('channelsGrid');
             grid.innerHTML = `<div style='color:#ff3b5c; grid-column:1/-1;'>Loading...</div>`;
             
-            let channels = [];
-            if (catKey.includes('sport')) {
-                channels = [
-                    {
-                        name: "Paramount+ HD",
-                        url: "https://pplus-ch-us.akamaized.net/hls/live/2097312/primary/index.m3u8",
-                        logo: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Paramount_Plus.svg"
-                    }
-                ];
-            }
-
             try {
                 const res = await fetch(`${JSON_FILE}?t=${new Date().getTime()}`);
                 const data = await res.json();
-                const remoteChannels = data[catKey] || [];
+                const channels = data[catKey] || [];
                 
-                remoteChannels.forEach(remoteCh => {
-                    if (!channels.find(ch => ch.name === remoteCh.name)) {
-                        channels.push(remoteCh);
-                    }
-                });
-            } catch (e) { console.log("Waiting for links update..."); }
+                if (channels.length === 0) {
+                    grid.innerHTML = `<div style='color:#888; grid-column:1/-1;'>No channels in this section.</div>`;
+                    return;
+                }
 
-            if (channels.length === 0) {
-               grid.innerHTML = `<div style='color:#888; grid-column:1/-1;'>No channels available.</div>`;
-               return;
+                grid.innerHTML = channels.map(ch => `
+                    <div class="channel-card" onclick="startStream('${ch.url}')">
+                        <img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/60/0b0e11/ff3b5c?text=${ch.name.substring(0,1)}'">
+                        <div style="font-size:10px; margin-top:5px; color:#fff;">${ch.name}</div>
+                    </div>`).join('');
+            } catch (e) { 
+                grid.innerHTML = `<div style='color:#888; grid-column:1/-1;'>Error loading JSON.</div>`;
             }
-
-            grid.innerHTML = channels.map(ch => `
-                <div class="channel-card" onclick="startStream('${ch.url}')">
-                    <img src="${ch.logo}" onerror="this.src='https://via.placeholder.com/60/0b0e11/ff3b5c?text=${ch.name.substring(0,1)}'">
-                    <div style="font-size:10px; margin-top:5px; color:#fff;">${ch.name}</div>
-                </div>`).join('');
         }
 
         function startStream(url) {
@@ -264,23 +253,10 @@
             if (hlsPlayer) { hlsPlayer.destroy(); }
             
             if (Hls.isSupported()) {
-                hlsPlayer = new Hls({
-                    xhrSetup: function (xhr, url) {
-                        xhr.withCredentials = false;
-                    }
-                });
+                hlsPlayer = new Hls({ xhrSetup: function (xhr) { xhr.withCredentials = false; } });
                 hlsPlayer.loadSource(url);
                 hlsPlayer.attachMedia(video);
-                hlsPlayer.on(Hls.Events.MANIFEST_PARSED, () => {
-                    video.play().catch(e => console.log("Auto-play blocked"));
-                });
-                
-                hlsPlayer.on(Hls.Events.ERROR, function (event, data) {
-                    if (data.fatal) {
-                        console.log("Stream error, attempting recovery...");
-                        hlsPlayer.recoverMediaError();
-                    }
-                });
+                hlsPlayer.on(Hls.Events.MANIFEST_PARSED, () => { video.play().catch(e => {}); });
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = url;
                 video.addEventListener('loadedmetadata', () => video.play());
@@ -319,18 +295,16 @@
             document.getElementById('mainPlayer').src = '';
             const video = document.getElementById('liveVideoPlayer');
             video.pause(); video.src = "";
-            container.scrollTop = 0; 
         }
 
         async function handleSearch(event) {
             const query = event.target.value.toLowerCase();
-            const grid = document.getElementById('moviesGrid');
             if (query.length === 0) { loadContent(currentType); return; }
             if (query.length > 2) {
                 try {
-                    const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${query}&include_adult=false`);
+                    const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${query}`);
                     const data = await res.json();
-                    grid.innerHTML = data.results.map(item => `
+                    document.getElementById('moviesGrid').innerHTML = data.results.map(item => `
                         <div class="movie-card" onclick="openPlayer('${item.id}')">
                             <img src="${item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : 'https://via.placeholder.com/500x750?text=No+Image'}">
                             <div class="movie-title">${item.title || item.name}</div>
