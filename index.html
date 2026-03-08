@@ -5,46 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYTVPRO - Premium Ads Edition</title>
     
-    <script>(function(s){s.dataset.zone='10696909',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <meta name="pushsdk" content="5ef0f3dfb8cca46f1aa63bee6254835d">
 
     <style>
         :root { --main-red: #ff3b5c; --bg-dark: #0b0e11; --card-bg: #1a1d21; }
         body { background-color: var(--bg-dark); color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 15px; overflow-x: hidden; }
         
-        /* الهيدر واللغات */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .logo { color: var(--main-red); font-size: 26px; font-weight: bold; cursor: pointer; text-decoration: none; }
         .lang-container { display: flex; gap: 10px; }
         .lang-btn { color: var(--main-red); font-weight: bold; cursor: pointer; font-size: 13px; text-transform: uppercase; padding: 5px; transition: 0.3s; }
         .lang-btn.active { color: #fff; border-bottom: 2px solid var(--main-red); }
 
-        /* البحث والتبويبات */
         .nav-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
         .tab { background: var(--card-bg); color: white; padding: 10px 25px; border-radius: 25px; cursor: pointer; border: none; font-weight: bold; }
         .tab.active { background: var(--main-red); }
         .search-container { width: 100%; max-width: 600px; margin: 0 auto 30px; }
         .search-container input { width: 100%; padding: 14px 25px; border-radius: 30px; border: 1px solid #333; background: var(--card-bg); color: white; outline: none; box-sizing: border-box; }
 
-        /* شاشة العداد الإشهاري المطور (فيديو 15 ثانية) */
         #adVideoOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .ad-timer-text { color: var(--main-red); font-size: 28px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,59,92,0.5); }
         .ad-frame-container { width: 95%; max-width: 800px; height: 450px; border: 2px solid #333; background: #111; position: relative; border-radius: 15px; overflow: hidden; }
         #adBlockerOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; cursor: not-allowed; }
 
-        /* الأفلام */
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
         .movie-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #222; cursor: pointer; transition: 0.3s; text-align: center; }
         .movie-card:hover { transform: translateY(-5px); border-color: var(--main-red); }
         .movie-card img { width: 100%; height: 210px; object-fit: cover; }
         .movie-title { padding: 10px; font-size: 12px; font-weight: bold; height: 35px; overflow: hidden; }
 
-        /* مساحة البانر العريض 920px */
         .premium-banner { width: 95%; max-width: 920px; height: 120px; background: #16191d; border: 1px solid #333; border-radius: 10px; margin: 30px auto; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; }
         .premium-banner:hover { border-color: var(--main-red); background: #1a1d21; }
         .banner-content { text-align: center; }
         .banner-content b { color: var(--main-red); font-size: 18px; }
 
-        /* المشغل المنظم في المنتصف */
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9000; overflow-y: auto; padding: 20px 0; }
         .player-wrapper { width: 95%; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #mainPlayer { width: 100%; height: 50vh; border: 2px solid var(--main-red); border-radius: 15px; background: #000; box-shadow: 0 0 20px rgba(255, 59, 92, 0.3); }
@@ -62,7 +56,7 @@
         <div class="ad-timer-text" id="timerDisplay">PREPARING VIDEO: 15s</div>
         <div class="ad-frame-container">
             <div id="adBlockerOverlay"></div> 
-            <iframe id="adIframe" src="https://omg10.com/4/10696583" style="width:100%; height:100%; border:none;"></iframe>
+            <iframe id="adIframe" src="about:blank" style="width:100%; height:100%; border:none;"></iframe>
         </div>
         <p style="color:#666; margin-top:15px; font-size: 14px;">The movie will unlock automatically after the ad finishes.</p>
     </div>
@@ -86,16 +80,16 @@
         <input type="text" id="searchInput" placeholder="Search movies & series..." onkeyup="handleSearch(event)">
     </div>
 
-    <div class="premium-banner" onclick="window.open('https://omg10.com/4/10696583', '_blank')">
+    <div class="premium-banner">
         <div class="banner-content">
             <b>ADVERTISEMENT</b><br>
-            <span>Click here to support the server & Watch in Ultra HD</span>
+            <span>Support the server & Watch in Ultra HD</span>
         </div>
     </div>
 
     <div class="movie-grid" id="moviesGrid"></div>
 
-    <div class="premium-banner" onclick="window.open('https://omg10.com/4/10696583', '_blank')">
+    <div class="premium-banner">
         <div class="banner-content">
             <b>PREMIUM DOWNLOAD</b><br>
             <span>Fastest server available - Click to Start</span>
@@ -104,8 +98,8 @@
 
     <footer class="disclaimer-box">
         <div class="disclaimer-grid">
-            <div><strong>EN:</strong> MYTVPRO does not host any files. All content is provided by non-affiliated third parties.</div>
-            <div><strong>FR:</strong> MYTVPRO n'héberge aucun fichier. Tout le contenu est fourni par des tiers non affiliés.</div>
+            <div><strong>EN:</strong> MYTVPRO does not host any files. All content is provided by third parties.</div>
+            <div><strong>FR:</strong> MYTVPRO n'héberge aucun fichier. Tout le contenu est fourni par des tiers.</div>
         </div>
     </footer>
 
@@ -114,17 +108,17 @@
             <button class="back-btn" id="backBtnText" onclick="closePlayer()">BACK</button>
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
             
-            <div class="premium-banner" onclick="window.open('https://omg10.com/4/10696583', '_blank')">
+            <div class="premium-banner">
                 <div class="banner-content">
                     <b>SERVER #2 (NO ADS)</b><br>
-                    <span>If the player is slow, click here for backup server</span>
+                    <span>If the player is slow, use backup server</span>
                 </div>
             </div>
 
             <div class="disclaimer-box">
                 <div class="disclaimer-grid">
                     <p><strong>EN:</strong> This video is hosted on external servers. We are not responsible for its content.</p>
-                    <p><strong>FR:</strong> Cette vidéo est hébergée sur des serveurs externes. Nous ne sommes pas responsables.</p>
+                    <p><strong>FR:</strong> Cette vidéo est hébergée sur des serveurs externes.</p>
                 </div>
             </div>
         </div>
@@ -136,7 +130,7 @@
 
         const i18n = {
             en: { search: "Search movies & series...", back: "BACK", movies: "Movies", series: "Series" },
-            fr: { search: "Chercher ici...", back: "RETOUR", movies: "Films", series: "Séries" },
+            fr: { search: "Chercher هنا...", back: "RETOUR", movies: "Films", series: "Séries" },
             de: { search: "Suchen...", back: "ZURÜCK", movies: "Filme", series: "Serien" },
             nl: { search: "Zoeken...", back: "TERUG", movies: "Films", series: "Series" }
         };
@@ -173,8 +167,6 @@
             const overlay = document.getElementById('adVideoOverlay');
             const timerDisplay = document.getElementById('timerDisplay');
             const blocker = document.getElementById('adBlockerOverlay');
-            
-            document.getElementById('adIframe').src = document.getElementById('adIframe').src;
             
             overlay.style.display = 'flex';
             blocker.style.display = 'block';
