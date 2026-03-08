@@ -11,7 +11,6 @@
         :root { --main-red: #ff3b5c; --bg-dark: #0b0e11; --card-bg: #1a1d21; }
         body { background-color: var(--bg-dark); color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 15px; overflow-x: hidden; }
         
-        /* التصميم الأساسي لنسخة Simo Final */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .logo { color: var(--main-red); font-size: 26px; font-weight: bold; cursor: pointer; text-decoration: none; }
         .lang-container { display: flex; gap: 10px; }
@@ -22,43 +21,38 @@
         .tab { background: var(--card-bg); color: white; padding: 10px 25px; border-radius: 25px; cursor: pointer; border: none; font-weight: bold; }
         .tab.active { background: var(--main-red); }
 
-        .search-container { width: 100%; max-width: 600px; margin: 0 auto 30px; }
+        .search-container { width: 100%; max-width: 600px; margin: 0 auto 10px; }
         .search-container input { width: 100%; padding: 14px 25px; border-radius: 30px; border: 1px solid #333; background: var(--card-bg); color: white; outline: none; box-sizing: border-box; }
 
-        /* شاشة العداد الـ 15 ثانية */
-        #adVideoOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .ad-timer-text { color: var(--main-red); font-size: 28px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,59,92,0.5); }
-        .ad-frame-container { width: 95%; max-width: 800px; height: 450px; border: 2px solid #333; background: #111; position: relative; border-radius: 15px; overflow: hidden; }
-        #adBlockerOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; cursor: not-allowed; }
+        /* إعلانات البانر 720x90 */
+        .ad-banner-720 { width: 100%; max-width: 720px; height: 90px; background: #16191d; border: 1px solid #333; border-radius: 8px; margin: 15px auto; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #555; overflow: hidden; }
 
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
+        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; max-width: 1200px; margin: 20px auto; }
         .movie-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #222; cursor: pointer; transition: 0.3s; text-align: center; }
         .movie-card:hover { transform: translateY(-5px); border-color: var(--main-red); }
         .movie-card img { width: 100%; height: 210px; object-fit: cover; }
         .movie-title { padding: 10px; font-size: 12px; font-weight: bold; height: 35px; overflow: hidden; }
-
-        .premium-banner { width: 95%; max-width: 920px; height: 120px; background: #16191d; border: 1px solid #333; border-radius: 10px; margin: 30px auto; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; text-align: center; }
-        .premium-banner:hover { border-color: var(--main-red); }
 
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9000; overflow-y: auto; padding: 20px 0; }
         .player-wrapper { width: 95%; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
         #mainPlayer { width: 100%; height: 50vh; border: 2px solid var(--main-red); border-radius: 15px; background: #000; }
         .back-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 8px 30px; border-radius: 20px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
 
-        .disclaimer-box { width: 100%; max-width: 850px; background: #16191d; border-radius: 10px; padding: 20px; margin: 10px auto; border-top: 3px solid var(--main-red); box-sizing: border-box; }
-        .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 11px; color: #888; }
+        .disclaimer-box { width: 100%; max-width: 850px; background: #16191d; border-radius: 10px; padding: 20px; margin: 20px auto; border-top: 3px solid var(--main-red); box-sizing: border-box; }
+        .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 11px; color: #888; line-height: 1.6; }
         
-        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 35vh; } }
+        #adVideoOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; flex-direction: column; align-items: center; justify-content: center; }
+        .ad-timer-text { color: var(--main-red); font-size: 24px; font-weight: bold; margin-bottom: 15px; }
+
+        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 35vh; } .ad-banner-720 { width: 320px; height: 50px; } }
     </style>
 </head>
 <body>
 
     <div id="adVideoOverlay">
         <div class="ad-timer-text" id="timerDisplay">PREPARING: 15s</div>
-        <div class="ad-frame-container">
-            <div id="adBlockerOverlay"></div> 
-            <iframe id="adIframe" src="about:blank" style="width:100%; height:100%; border:none;"></iframe>
-        </div>
+        <div style="width:90%; max-width:720px; height:90px; background:#111; border:1px solid #333;">
+            </div>
     </div>
 
     <div class="header">
@@ -67,6 +61,7 @@
             <span class="lang-btn active" id="lang-en" onclick="changeLanguage('en')">EN</span>
             <span class="lang-btn" id="lang-fr" onclick="changeLanguage('fr')">FR</span>
             <span class="lang-btn" id="lang-de" onclick="changeLanguage('de')">DE</span>
+            <span class="lang-btn" id="lang-nl" onclick="changeLanguage('nl')">NL</span>
         </div>
     </div>
 
@@ -75,27 +70,37 @@
         <button id="btnSeries" class="tab" onclick="loadContent('tv')">Series</button>
     </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search..." onkeyup="handleSearch(event)">
-    </div>
+    <div class="ad-banner-720">ADVERTISEMENT 720x90</div>
 
-    <div class="premium-banner" onclick="window.open('https://5gvci.com/act/files/service-worker.min.js?r=sw', '_blank')">
-        <div style="color:var(--main-red); font-weight:bold;">PREMIUM ACCESS UNLOCKED</div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search movies & series..." onkeyup="handleSearch(event)">
     </div>
 
     <div class="movie-grid" id="moviesGrid"></div>
 
+    <div class="ad-banner-720">ADVERTISEMENT 720x90</div>
+
     <footer class="disclaimer-box">
         <div class="disclaimer-grid">
-            <div><strong>EN:</strong> Content provided by third-party servers. MYTVPRO does not host files.</div>
-            <div><strong>FR:</strong> Contenu fourni par des serveurs tiers. MYTVPRO n'héberge pas de fichiers.</div>
+            <div><strong>DISCLAIMER (EN):</strong> MYTVPRO is an online service that index and links to content provided by third-party servers. We do not host, store or upload any video files. All trademarks and copyrights belong to their respective owners.</div>
+            <div><strong>CLAUSE DE NON-RESPONSABILITÉ (FR):</strong> MYTVPRO est un service en ligne qui indexe et lie le contenu fourni par des serveurs tiers. Nous n'hébergeons, ne stockons ni ne téléchargeons aucun fichier vidéo.</div>
         </div>
     </footer>
 
     <div id="videoPlayerContainer">
         <div class="player-wrapper">
             <button class="back-btn" id="backBtnText" onclick="closePlayer()">BACK</button>
+            
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
+
+            <div class="ad-banner-720">ADVERTISEMENT 720x90</div>
+
+            <div class="disclaimer-box">
+                <div class="disclaimer-grid">
+                    <div><strong>EN:</strong> This player uses third-party API. We are not responsible for the ads inside the player.</div>
+                    <div><strong>FR:</strong> Ce lecteur utilise une API tierce. Nous ne sommes pas responsables des publicités.</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -103,8 +108,23 @@
         const API_KEY = '715fb05852af662217013d8380237f2a';
         let currentType = 'movie', currentLang = 'en';
 
-        // دمج الـ Smart Tag برمجياً ليعمل مع sw.js المرفوع
-        (function(s){s.dataset.zone='10696293',s.src='https://5gvci.com/act/files/service-worker.min.js?r=sw'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+        const i18n = {
+            en: { search: "Search movies & series...", back: "BACK", movies: "Movies", series: "Series" },
+            fr: { search: "Chercher films et séries...", back: "RETOUR", movies: "Films", series: "Séries" },
+            de: { search: "Filme und Serien suchen...", back: "ZURÜCK", movies: "Filme", series: "Serien" },
+            nl: { search: "Zoek films en series...", back: "TERUG", movies: "Films", series: "Series" }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('lang-'+lang).classList.add('active');
+            document.getElementById('searchInput').placeholder = i18n[lang].search;
+            document.getElementById('backBtnText').innerText = i18n[lang].back;
+            document.getElementById('btnMovies').innerText = i18n[lang].movies;
+            document.getElementById('btnSeries').innerText = i18n[lang].series;
+            loadContent(currentType);
+        }
 
         async function loadContent(type) {
             currentType = type;
@@ -121,6 +141,15 @@
                     <img src="https://image.tmdb.org/t/p/w500${item.poster_path}">
                     <div class="movie-title">${item.title || item.name}</div>
                 </div>`).join('');
+        }
+
+        async function handleSearch(event) {
+            const q = event.target.value;
+            if (q.length > 2) {
+                const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${q}`);
+                const data = await res.json();
+                renderGrid(data.results);
+            } else if (q.length === 0) { loadContent(currentType); }
         }
 
         function startAdTimer(id) {
@@ -141,6 +170,7 @@
         function openPlayer(id) {
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
+            window.scrollTo(0,0);
         }
 
         function closePlayer() {
@@ -149,6 +179,8 @@
         }
 
         window.onload = () => loadContent('movie');
+
+        (function(s){s.dataset.zone='10696293',s.src='https://5gvci.com/act/files/service-worker.min.js?r=sw'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
     </script>
 </body>
 </html>
