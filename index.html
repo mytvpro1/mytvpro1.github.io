@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYTVPRO - Movies & Series Edition</title>
     
-   ​<meta name="monetag" content="713269932f9e6998423e0592d22c4429">
+   <meta name="monetag" content="713269932f9e6998423e0592d22c4429">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     
@@ -41,13 +41,13 @@
         <button class="tab" style="margin-bottom:20px; background:#1a1d21; border:1px solid #ff3b5c; display:inline-block;" id="backBtn" onclick="closePlayer()">BACK</button>
         
         <div class="ad-banner-box" id="ad-top">
-            <span style="color:#555">AD SPACE</span>
+            <a href="https://omg10.com/4/10696583" target="_blank" style="color:#ff3b5c; text-decoration:none; font-weight:bold;">CLICK HERE TO UNLOCK SERVER</a>
         </div>
 
         <iframe id="mainPlayer" src="" allowfullscreen style="border:none; margin:0 auto;"></iframe>
 
         <div class="ad-banner-box" id="ad-bottom">
-            <span style="color:#555">AD SPACE</span>
+            <a href="https://omg10.com/4/10696583" target="_blank" style="color:#ff3b5c; text-decoration:none; font-weight:bold;">DOWNLOAD HD SPEED</a>
         </div>
     </div>
 
@@ -92,6 +92,8 @@
     <script>
         const API_KEY = '715fb05852af662217013d8380237f2a';
         let currentType = 'movie', currentLang = 'en';
+        // رابط الربح المباشر الخاص بك
+        const MY_DIRECT_LINK = "https://omg10.com/4/10696583";
 
         const translations = {
             en: { movies: "Movies", series: "Series", search: "Search movies & series...", back: "BACK" },
@@ -128,6 +130,9 @@
         }
 
         function triggerAdAndOpen(id) {
+            // فتح رابط الربح المباشر في صفحة جديدة لزيادة الأرباح
+            window.open(MY_DIRECT_LINK, '_blank');
+
             if (typeof show_8985642 === 'function') {
                 show_8985642().then(() => { openPlayer(id); }).catch(() => { openPlayer(id); });
             } else {
