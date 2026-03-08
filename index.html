@@ -55,7 +55,7 @@
         <div class="logo" onclick="location.reload()">MYTVPRO</div>
         <div class="nav-tabs">
             <button id="btnMovies" class="tab active" onclick="loadContent('movie')">Movies</button>
-            <button id="btnSeries" class="tab" onclick="loadContent('tv')">Series</button>
+            <button id="btnSeries" class="tab" onclick="onclick="loadContent('tv')">Series</button>
         </div>
         <div class="lang-container">
             <span class="lang-btn active" id="lang-en" onclick="changeLanguage('en')">EN</span>
@@ -87,12 +87,9 @@
         </div>
     </footer>
 
-    <script src='https://alwingulla.com/act/files/tag.min.js?z=8985642' data-cfasync='false' async></script>
-
     <script>
         const API_KEY = '715fb05852af662217013d8380237f2a';
         let currentType = 'movie', currentLang = 'en';
-        // رابط الربح المباشر الخاص بك
         const MY_DIRECT_LINK = "https://omg10.com/4/10696583";
 
         const translations = {
@@ -122,24 +119,14 @@
                 const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${API_KEY}&language=${currentLang}&page=1`);
                 const data = await res.json();
                 document.getElementById('moviesGrid').innerHTML = data.results.map(item => `
-                    <div class="movie-card" onclick="triggerAdAndOpen('${item.id}')">
+                    <div class="movie-card" onclick="openPlayer('${item.id}')">
                         <img src="https://image.tmdb.org/t/p/w500${item.poster_path}">
                         <div class="movie-title">${item.title || item.name}</div>
                     </div>`).join('');
             } catch(e) {}
         }
 
-        function triggerAdAndOpen(id) {
-            // فتح رابط الربح المباشر في صفحة جديدة لزيادة الأرباح
-            window.open(MY_DIRECT_LINK, '_blank');
-
-            if (typeof show_8985642 === 'function') {
-                show_8985642().then(() => { openPlayer(id); }).catch(() => { openPlayer(id); });
-            } else {
-                openPlayer(id);
-            }
-        }
-
+        // تم تعديل هذه الوظيفة لفتح الفيديو مباشرة
         function openPlayer(id) {
             const player = document.getElementById('mainPlayer');
             player.src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
@@ -161,7 +148,7 @@
                     const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${query}`);
                     const data = await res.json();
                     document.getElementById('moviesGrid').innerHTML = data.results.map(item => `
-                        <div class="movie-card" onclick="triggerAdAndOpen('${item.id}')">
+                        <div class="movie-card" onclick="openPlayer('${item.id}')">
                             <img src="${item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : 'https://via.placeholder.com/500x750?text=No+Image'}">
                             <div class="movie-title">${item.title || item.name}</div>
                         </div>`).join('');
