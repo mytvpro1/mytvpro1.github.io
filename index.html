@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYTVPRO - Premium Ads Edition</title>
+    <title>MYTVPRO - Premium Edition</title>
     
     <meta name="pushsdk" content="5ef0f3dfb8cca46f1aa63bee6254835d">
 
@@ -11,6 +11,7 @@
         :root { --main-red: #ff3b5c; --bg-dark: #0b0e11; --card-bg: #1a1d21; }
         body { background-color: var(--bg-dark); color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 15px; overflow-x: hidden; }
         
+        /* التصميم الأساسي لنسخة Simo Final */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .logo { color: var(--main-red); font-size: 26px; font-weight: bold; cursor: pointer; text-decoration: none; }
         .lang-container { display: flex; gap: 10px; }
@@ -20,9 +21,11 @@
         .nav-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
         .tab { background: var(--card-bg); color: white; padding: 10px 25px; border-radius: 25px; cursor: pointer; border: none; font-weight: bold; }
         .tab.active { background: var(--main-red); }
+
         .search-container { width: 100%; max-width: 600px; margin: 0 auto 30px; }
         .search-container input { width: 100%; padding: 14px 25px; border-radius: 30px; border: 1px solid #333; background: var(--card-bg); color: white; outline: none; box-sizing: border-box; }
 
+        /* شاشة العداد الـ 15 ثانية */
         #adVideoOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .ad-timer-text { color: var(--main-red); font-size: 28px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,59,92,0.5); }
         .ad-frame-container { width: 95%; max-width: 800px; height: 450px; border: 2px solid #333; background: #111; position: relative; border-radius: 15px; overflow: hidden; }
@@ -34,31 +37,28 @@
         .movie-card img { width: 100%; height: 210px; object-fit: cover; }
         .movie-title { padding: 10px; font-size: 12px; font-weight: bold; height: 35px; overflow: hidden; }
 
-        .premium-banner { width: 95%; max-width: 920px; height: 120px; background: #16191d; border: 1px solid #333; border-radius: 10px; margin: 30px auto; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; }
-        .premium-banner:hover { border-color: var(--main-red); background: #1a1d21; }
-        .banner-content { text-align: center; }
-        .banner-content b { color: var(--main-red); font-size: 18px; }
+        .premium-banner { width: 95%; max-width: 920px; height: 120px; background: #16191d; border: 1px solid #333; border-radius: 10px; margin: 30px auto; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; overflow: hidden; text-align: center; }
+        .premium-banner:hover { border-color: var(--main-red); }
 
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9000; overflow-y: auto; padding: 20px 0; }
         .player-wrapper { width: 95%; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-        #mainPlayer { width: 100%; height: 50vh; border: 2px solid var(--main-red); border-radius: 15px; background: #000; box-shadow: 0 0 20px rgba(255, 59, 92, 0.3); }
+        #mainPlayer { width: 100%; height: 50vh; border: 2px solid var(--main-red); border-radius: 15px; background: #000; }
         .back-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 8px 30px; border-radius: 20px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
 
         .disclaimer-box { width: 100%; max-width: 850px; background: #16191d; border-radius: 10px; padding: 20px; margin: 10px auto; border-top: 3px solid var(--main-red); box-sizing: border-box; }
-        .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 12px; color: #888; text-align: left; }
+        .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 11px; color: #888; }
         
-        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 30vh; } .premium-banner { height: 90px; } }
+        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 35vh; } }
     </style>
 </head>
 <body>
 
     <div id="adVideoOverlay">
-        <div class="ad-timer-text" id="timerDisplay">PREPARING VIDEO: 15s</div>
+        <div class="ad-timer-text" id="timerDisplay">PREPARING: 15s</div>
         <div class="ad-frame-container">
             <div id="adBlockerOverlay"></div> 
             <iframe id="adIframe" src="about:blank" style="width:100%; height:100%; border:none;"></iframe>
         </div>
-        <p style="color:#666; margin-top:15px; font-size: 14px;">The movie will unlock automatically after the ad finishes.</p>
     </div>
 
     <div class="header">
@@ -67,7 +67,6 @@
             <span class="lang-btn active" id="lang-en" onclick="changeLanguage('en')">EN</span>
             <span class="lang-btn" id="lang-fr" onclick="changeLanguage('fr')">FR</span>
             <span class="lang-btn" id="lang-de" onclick="changeLanguage('de')">DE</span>
-            <span class="lang-btn" id="lang-nl" onclick="changeLanguage('nl')">NL</span>
         </div>
     </div>
 
@@ -77,29 +76,19 @@
     </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search movies & series..." onkeyup="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Search..." onkeyup="handleSearch(event)">
     </div>
 
-    <div class="premium-banner">
-        <div class="banner-content">
-            <b>ADVERTISEMENT</b><br>
-            <span>Support the server & Watch in Ultra HD</span>
-        </div>
+    <div class="premium-banner" onclick="window.open('https://5gvci.com/act/files/service-worker.min.js?r=sw', '_blank')">
+        <div style="color:var(--main-red); font-weight:bold;">PREMIUM ACCESS UNLOCKED</div>
     </div>
 
     <div class="movie-grid" id="moviesGrid"></div>
 
-    <div class="premium-banner">
-        <div class="banner-content">
-            <b>PREMIUM DOWNLOAD</b><br>
-            <span>Fastest server available - Click to Start</span>
-        </div>
-    </div>
-
     <footer class="disclaimer-box">
         <div class="disclaimer-grid">
-            <div><strong>EN:</strong> MYTVPRO does not host any files. All content is provided by third parties.</div>
-            <div><strong>FR:</strong> MYTVPRO n'héberge aucun fichier. Tout le contenu est fourni par des tiers.</div>
+            <div><strong>EN:</strong> Content provided by third-party servers. MYTVPRO does not host files.</div>
+            <div><strong>FR:</strong> Contenu fourni par des serveurs tiers. MYTVPRO n'héberge pas de fichiers.</div>
         </div>
     </footer>
 
@@ -107,20 +96,6 @@
         <div class="player-wrapper">
             <button class="back-btn" id="backBtnText" onclick="closePlayer()">BACK</button>
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
-            
-            <div class="premium-banner">
-                <div class="banner-content">
-                    <b>SERVER #2 (NO ADS)</b><br>
-                    <span>If the player is slow, use backup server</span>
-                </div>
-            </div>
-
-            <div class="disclaimer-box">
-                <div class="disclaimer-grid">
-                    <p><strong>EN:</strong> This video is hosted on external servers. We are not responsible for its content.</p>
-                    <p><strong>FR:</strong> Cette vidéo est hébergée sur des serveurs externes.</p>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -128,23 +103,8 @@
         const API_KEY = '715fb05852af662217013d8380237f2a';
         let currentType = 'movie', currentLang = 'en';
 
-        const i18n = {
-            en: { search: "Search movies & series...", back: "BACK", movies: "Movies", series: "Series" },
-            fr: { search: "Chercher هنا...", back: "RETOUR", movies: "Films", series: "Séries" },
-            de: { search: "Suchen...", back: "ZURÜCK", movies: "Filme", series: "Serien" },
-            nl: { search: "Zoeken...", back: "TERUG", movies: "Films", series: "Series" }
-        };
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('lang-'+lang).classList.add('active');
-            document.getElementById('searchInput').placeholder = i18n[lang].search;
-            document.getElementById('backBtnText').innerText = i18n[lang].back;
-            document.getElementById('btnMovies').innerText = i18n[lang].movies;
-            document.getElementById('btnSeries').innerText = i18n[lang].series;
-            loadContent(currentType);
-        }
+        // دمج الـ Smart Tag برمجياً ليعمل مع sw.js المرفوع
+        (function(s){s.dataset.zone='10696293',s.src='https://5gvci.com/act/files/service-worker.min.js?r=sw'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
 
         async function loadContent(type) {
             currentType = type;
@@ -158,57 +118,34 @@
         function renderGrid(items) {
             document.getElementById('moviesGrid').innerHTML = items.map(item => `
                 <div class="movie-card" onclick="startAdTimer('${item.id}')">
-                    <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" alt="${item.title || item.name}">
+                    <img src="https://image.tmdb.org/t/p/w500${item.poster_path}">
                     <div class="movie-title">${item.title || item.name}</div>
                 </div>`).join('');
         }
 
         function startAdTimer(id) {
             const overlay = document.getElementById('adVideoOverlay');
-            const timerDisplay = document.getElementById('timerDisplay');
-            const blocker = document.getElementById('adBlockerOverlay');
-            
             overlay.style.display = 'flex';
-            blocker.style.display = 'block';
-            
-            let timeLeft = 15; 
-            const countdown = setInterval(() => {
+            let timeLeft = 15;
+            const interval = setInterval(() => {
                 timeLeft--;
-                timerDisplay.innerText = `UNLOCKING IN: ${timeLeft}s`;
-                if (timeLeft <= 0) {
-                    clearInterval(countdown);
-                    timerDisplay.innerText = "CONTENT UNLOCKED!";
-                    timerDisplay.style.color = "#00ff00";
-                    blocker.style.display = 'none';
-                    
-                    setTimeout(() => {
-                        overlay.style.display = 'none';
-                        timerDisplay.style.color = "var(--main-red)";
-                        openPlayer(id);
-                    }, 1000);
+                document.getElementById('timerDisplay').innerText = `UNLOCKING: ${timeLeft}s`;
+                if(timeLeft <= 0) {
+                    clearInterval(interval);
+                    overlay.style.display = 'none';
+                    openPlayer(id);
                 }
             }, 1000);
         }
 
         function openPlayer(id) {
-            const player = document.getElementById('mainPlayer');
-            player.src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
+            document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
-            window.scrollTo(0, 0);
         }
 
         function closePlayer() {
             document.getElementById('videoPlayerContainer').style.display = 'none';
             document.getElementById('mainPlayer').src = '';
-        }
-
-        async function handleSearch(event) {
-            const q = event.target.value;
-            if (q.length > 2) {
-                const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${q}`);
-                const data = await res.json();
-                renderGrid(data.results);
-            } else if (q.length === 0) { loadContent(currentType); }
         }
 
         window.onload = () => loadContent('movie');
