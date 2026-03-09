@@ -1,5 +1,0 @@
-var options = {
-    "domain": "5gvci.com",
-    "zoneId": 10696293
-};
-importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
