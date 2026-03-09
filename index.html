@@ -27,8 +27,17 @@
         .tab.active { background: var(--main-red); }
         .search-container { width: 100%; max-width: 600px; margin: 0 auto 10px; }
         .search-container input { width: 100%; padding: 14px 25px; border-radius: 30px; border: 1px solid #333; background: var(--card-bg); color: white; outline: none; box-sizing: border-box; }
-        .ad-banner-720 { width: 100%; max-width: 720px; height: 90px; background: #16191d; border: 1px solid #333; border-radius: 8px; margin: 15px auto; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #555; overflow: hidden; }
-        .ad-banner-720 a { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit; }
+        
+        .ad-banner-720 { width: 100%; max-width: 720px; height: 90px; margin: 15px auto; overflow: hidden; border-radius: 8px; border: 1px solid #333; }
+        .ad-banner-720 a { width: 100%; height: 100%; text-decoration: none; display: block; }
+        
+        /* تصميم البانرات الجذابة */
+        .banner-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; text-align: center; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .banner-1 { background: linear-gradient(90deg, #0b0e11, #ff3b5c, #0b0e11); }
+        .banner-2 { background: linear-gradient(45deg, #1a1d21, #ff3b5c); border-left: 5px solid #fff; }
+        .banner-3 { background: #16191d; border: 2px solid #ff3b5c; color: #ff3b5c; }
+        .banner-content:hover { filter: brightness(1.2); }
+
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; max-width: 1200px; margin: 20px auto; }
         .movie-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #222; cursor: pointer; transition: 0.3s; text-align: center; }
         .movie-card:hover { transform: translateY(-5px); border-color: var(--main-red); }
@@ -38,23 +47,11 @@
         .player-wrapper { width: 95%; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; position: relative; }
         #mainPlayer { width: 100%; height: 50vh; border: 2px solid var(--main-red); border-radius: 15px; background: #000; }
         
-        /* طبقة الإعلان الشفافة فوق المشغل */
-        #adTriggerLayer {
-            position: absolute;
-            top: 50px; /* تحت زر BACK */
-            left: 0;
-            width: 100%;
-            height: 50vh;
-            z-index: 10001;
-            background: rgba(0,0,0,0); /* شفافة تماماً */
-            cursor: pointer;
-            border-radius: 15px;
-        }
-
+        #adTriggerLayer { position: absolute; top: 50px; left: 0; width: 100%; height: 50vh; z-index: 10001; background: rgba(0,0,0,0); cursor: pointer; border-radius: 15px; }
         .back-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 8px 30px; border-radius: 20px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
         .disclaimer-box { width: 100%; max-width: 850px; background: #16191d; border-radius: 10px; padding: 20px; margin: 20px auto; border-top: 3px solid var(--main-red); box-sizing: border-box; }
         .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 11px; color: #888; line-height: 1.6; }
-        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 35vh; } #adTriggerLayer { height: 35vh; } .ad-banner-720 { width: 320px; height: 50px; } }
+        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 35vh; } #adTriggerLayer { height: 35vh; } .ad-banner-720 { width: 320px; height: 50px; } .banner-content { font-size: 12px; } }
     </style>
 </head>
 <body>
@@ -75,7 +72,9 @@
     </div>
 
     <div class="ad-banner-720">
-        <a href="https://rm358.com/4/10700846" target="_blank"> <img src="https://via.placeholder.com/720x90/111/ff3b5c?text=PREMIUM+AD+1" alt="PRO BANNER 1" style="width:100%; height:100%; object-fit:cover; display:block;"></a>
+        <a href="https://rm358.com/4/10700846" target="_blank">
+            <div class="banner-content banner-1">🚀 Unlock Premium HD Channels - Click to Start</div>
+        </a>
     </div>
 
     <div class="search-container">
@@ -85,7 +84,9 @@
     <div class="movie-grid" id="moviesGrid"></div>
 
     <div class="ad-banner-720">
-        <a href="https://rm358.com/4/10700846" target="_blank"> <img src="https://via.placeholder.com/720x90/111/ff3b5c?text=PREMIUM+AD+2" alt="PRO BANNER 2" style="width:100%; height:100%; object-fit:cover; display:block;"></a>
+        <a href="https://rm358.com/4/10700846" target="_blank">
+            <div class="banner-content banner-2">📺 4K Streaming Server Active - Click to Watch</div>
+        </a>
     </div>
 
     <footer class="disclaimer-box">
@@ -98,13 +99,13 @@
     <div id="videoPlayerContainer">
         <div class="player-wrapper">
             <button class="back-btn" id="backBtnText" onclick="closePlayer()">BACK</button>
-            
             <div id="adTriggerLayer" onclick="triggerSmartLink()"></div>
-            
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
             
             <div class="ad-banner-720">
-                <a href="https://rm358.com/4/10700846" target="_blank"> <img src="https://via.placeholder.com/720x90/111/ff3b5c?text=PREMIUM+AD+3" alt="PRO BANNER 3" style="width:100%; height:100%; object-fit:cover; display:block;"></a>
+                <a href="https://rm358.com/4/10700846" target="_blank">
+                    <div class="banner-content banner-3">⚠️ Fast Load Server: Click to Enable HD</div>
+                </a>
             </div>
 
             <div class="disclaimer-box">
@@ -165,7 +166,6 @@
             } else if (q.length === 0) { loadContent(currentType); }
         }
 
-        // الوظيفة الجديدة: تفتح الإعلان وتخفي الطبقة
         function triggerSmartLink() {
             window.open(SMART_LINK, '_blank');
             document.getElementById('adTriggerLayer').style.display = 'none';
@@ -174,7 +174,7 @@
         function openPlayer(id) {
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
-            document.getElementById('adTriggerLayer').style.display = 'block'; // تظهر الطبقة مع كل فيلم جديد
+            document.getElementById('adTriggerLayer').style.display = 'block';
             window.scrollTo(0,0);
         }
 
