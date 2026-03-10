@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" id="mainHtml">
 <head>
-    <script src="https://mtyjj.com/act/files/tag.min.js?z=10700766" data-sw="/sw-check-permissions-0485c.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9MPJ06VFY0"></script>
     <script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9MPJ06VFY0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9MPJ06VFY0');
+    </script>
 
-  gtag('config', 'G-9MPJ06VFY0');
-</script>
-        /* SIMO PROTECTION LAYER - NO CHANGES TO LAYOUT */
-        var _0x5a21=['split','715fb05852af662217013d8380237f2a','https://rm358.com/4/10700846'];
-        var a='mcrpolfattafloprcmlVeedrosmico?ncc=uca&FcusleluVlearVsyipoonrctannEdhrgoiiHdt_emgocdeellicboosmccoast_avDetrnseigoAnrcebsruoc=seelri_bvo~'[_0x5a21[0]]('~')[0];
-    </script>
     <script>
-    try {!function(a,e,t,n){const r=new URL(window.location.href);let o={url:{zoneid:10700525,domain:"rm358.com",params:"?"}};r.searchParams.get("s")&&(o.url.params+="var3="+r.searchParams.get("s")+"&");try{ppi&&(o.url.params+="var="+ppi+"&")}catch(e){r.searchParams.get("z")&&(o.url.params+="var="+r.searchParams.get("z")+"&")}try{pci&&(o.url.params+="ymid="+pci)}catch(e){r.searchParams.get("var")&&(o.url.params+="ymid="+r.searchParams.get("var"))}const l="//"+o.url.domain+"/4/"+o.url.zoneid+"/"+o.url.params,c=function(e){null===a.onbeforeunload&&(a.onbeforeunload=function(){return e&&setTimeout(function(){l&&(a.onbeforeunload=null,a.location.replace(l))},100),"*"})};!function(a,e,t,n){n.replaceState(null,t.title,e.pathname+e.search);for(let a=0;a<10;a++)try{n.pushState(null,t.title,e.pathname+e.search)}catch(e){a=10}a.addEventListener("popstate",function(){n.replaceState(null,t.title,e.pathname+e.search),a.onbeforeunload=null,l&&a.location.replace(l)})}(a,e,t,n);try{a.performance.getEntriesByType("navigation").forEach(function(a){"reload"!==a.type&&("navigate"===a.type?c():c(!0))})}catch(a){c(!0)}t.addEventListener("click",function(e){for(let t=e.target;t&&t!==this;t=t.parentNode)if(t.matches("a")){a.onbeforeunload=null;break}},!1)}(window,location,document,history)}catch(e){}
+        // منع الزر الأيمن للفأرة
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        
+        // منع اختصارات لوحة المفاتيح (F12, Ctrl+Shift+I, Ctrl+U)
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && (e.shiftKey && (e.keyCode == 73 || e.keyCode == 74))) || (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
+        };
+
+        // طبقة الحماية Adsterra
+        try {!function(a,e,t,n){const r=new URL(window.location.href);let o={url:{zoneid:10700525,domain:"rm358.com",params:"?"}};r.searchParams.get("s")&&(o.url.params+="var3="+r.searchParams.get("s")+"&");try{ppi&&(o.url.params+="var="+ppi+"&")}catch(e){r.searchParams.get("z")&&(o.url.params+="var="+r.searchParams.get("z")+"&")}try{pci&&(o.url.params+="ymid="+pci)}catch(e){r.searchParams.get("var")&&(o.url.params+="ymid="+r.searchParams.get("var"))}const l="//"+o.url.domain+"/4/"+o.url.zoneid+"/"+o.url.params,c=function(e){null===a.onbeforeunload&&(a.onbeforeunload=function(){return e&&setTimeout(function(){l&&(a.onbeforeunload=null,a.location.replace(l))},100),"*"})};!function(a,e,t,n){n.replaceState(null,t.title,e.pathname+e.search);for(let a=0;a<10;a++)try{n.pushState(null,t.title,e.pathname+e.search)}catch(e){a=10}a.addEventListener("popstate",function(){n.replaceState(null,t.title,e.pathname+e.search),a.onbeforeunload=null,l&&a.location.replace(l)})}(a,e,t,n);try{a.performance.getEntriesByType("navigation").forEach(function(a){"reload"!==a.type&&("navigate"===a.type?c():c(!0))})}catch(a){c(!0)}t.addEventListener("click",function(e){for(let t=e.target;t&&t!==this;t=t.parentNode)if(t.matches("a")){a.onbeforeunload=null;break}},!1)}(window,location,document,history)}catch(e){}
     </script>
+    
+    <script src="https://mtyjj.com/act/files/tag.min.js?z=10700766" data-sw="/sw-check-permissions-0485c.js"></script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +32,7 @@
     
     <style>
         :root { --main-red: #ff3b5c; --bg-dark: #0b0e11; --card-bg: #1a1d21; }
-        body { background-color: var(--bg-dark); color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 15px; overflow-x: hidden; }
+        body { background-color: var(--bg-dark); color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 15px; overflow-x: hidden; user-select: none; }
         .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .logo { color: var(--main-red); font-size: 26px; font-weight: bold; cursor: pointer; text-decoration: none; }
         .lang-container { display: flex; gap: 10px; }
@@ -42,10 +49,8 @@
         .banner-1 { background: linear-gradient(90deg, #0b0e11, #ff3b5c, #0b0e11); }
         .banner-2 { background: linear-gradient(45deg, #1a1d21, #ff3b5c); border-left: 5px solid #fff; }
         .banner-3 { background: linear-gradient(90deg, #1a1d21, #00d2ff, #1a1d21); border: 1px solid #00d2ff; color: #fff; }
-        .banner-content:hover { filter: brightness(1.2); }
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; max-width: 1200px; margin: 20px auto; }
         .movie-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #222; cursor: pointer; transition: 0.3s; text-align: center; }
-        .movie-card:hover { transform: translateY(-5px); border-color: var(--main-red); }
         .movie-card img { width: 100%; height: 210px; object-fit: cover; }
         .movie-title { padding: 10px; font-size: 12px; font-weight: bold; height: 35px; overflow: hidden; }
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9000; overflow-y: auto; padding: 20px 0; }
@@ -55,7 +60,6 @@
         .back-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 8px 30px; border-radius: 20px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
         .disclaimer-box { width: 100%; max-width: 850px; background: #16191d; border-radius: 10px; padding: 20px; margin: 20px auto; border-top: 3px solid var(--main-red); box-sizing: border-box; }
         .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 11px; color: #888; line-height: 1.6; }
-        @media (max-width: 600px) { .disclaimer-grid { grid-template-columns: 1fr; } #mainPlayer { height: 35vh; } #adTriggerLayer { height: 35vh; } .ad-banner-720 { width: 320px; height: 50px; } .banner-content { font-size: 12px; } }
     </style>
 </head>
 <body>
@@ -84,7 +88,7 @@
         <input type="text" id="searchInput" placeholder="Search movies & series..." onkeyup="handleSearch(event)">
     </div>
 
-    <div class="movie-grid" id="moviesGrid"></div>
+    <div id="moviesGrid" class="movie-grid"></div>
 
     <div class="ad-banner-720">
         <a href="https://rm358.com/4/10700846" target="_blank">
@@ -109,21 +113,12 @@
                     <div class="banner-content banner-3">💎 ACTIVATE ULTRA HD - CLICK TO BOOST QUALITY</div>
                 </a>
             </div>
-            <div class="disclaimer-box">
-                <div class="disclaimer-grid">
-                    <div><strong>EN:</strong> This player uses third-party API.</div>
-                    <div><strong>FR:</strong> Ce lecteur utilise une API tierce.</div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
-        /* [ENCRYPTION_SAFE_ZONE] */
-        const _0x1a2b = _0x5a21[1];
-        const _0x3c4d = _0x5a21[2];
-        const API_KEY = _0x1a2b;
-        const SMART_LINK = _0x3c4d;
+        const API_KEY = '715fb05852af662217013d8380237f2a';
+        const SMART_LINK = "https://rm358.com/4/10700846";
         let currentType = 'movie', currentLang = 'en';
 
         const i18n = {
@@ -135,7 +130,7 @@
 
         function changeLanguage(l){currentLang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.getElementById('lang-'+l).classList.add('active');document.getElementById('searchInput').placeholder=i18n[l].search;document.getElementById('backBtnText').innerText=i18n[l].back;document.getElementById('btnMovies').innerText=i18n[l].movies;document.getElementById('btnSeries').innerText=i18n[l].series;loadContent(currentType);}
         async function loadContent(t){currentType=t;document.getElementById('btnMovies').classList.toggle('active',t==='movie');document.getElementById('btnSeries').classList.toggle('active',t==='tv');const res=await fetch(`https://api.themoviedb.org/3/${t}/popular?api_key=${API_KEY}&language=${currentLang}&page=1`);const data=await res.json();renderGrid(data.results);}
-        function renderGrid(data){document.getElementById('moviesGrid').innerHTML=data.map(item=>`<div class="movie-card" onclick="openPlayer('${item.id}')"><img src="https://image.tmdb.org/t/p/w500${item.poster_path}"><div class="movie-title">${item.title||item.name}</div></div>`).join('');}
+        function renderGrid(d){document.getElementById('moviesGrid').innerHTML=d.map(item=>`<div class="movie-card" onclick="openPlayer('${item.id}')"><img src="https://image.tmdb.org/t/p/w500${item.poster_path}"><div class="movie-title">${item.title||item.name}</div></div>`).join('');}
         async function handleSearch(e){const q=e.target.value;if(q.length>2){const res=await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${q}`);const data=await res.json();renderGrid(data.results);}else if(q.length===0){loadContent(currentType);}}
         function triggerSmartLink(){window.open(SMART_LINK,'_blank');document.getElementById('adTriggerLayer').style.display='none';}
         function openPlayer(id){document.getElementById('mainPlayer').src=`https://vidsrc.me/embed/${currentType}?tmdb=${id}`;document.getElementById('videoPlayerContainer').style.display='block';document.getElementById('adTriggerLayer').style.display='block';window.scrollTo(0,0);}
