@@ -18,8 +18,6 @@
         };
     </script>
     
-    <script src="https://mtyjj.com/act/files/tag.min.js?z=10700766" data-sw="/sw.js"></script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYTVPRO - Premium Edition</title>
@@ -50,7 +48,8 @@
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9000; overflow-y: auto; padding: 20px 0; }
         .player-wrapper { width: 95%; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; position: relative; }
         #mainPlayer { width: 100%; height: 50vh; border: 2px solid var(--main-red); border-radius: 15px; background: #000; }
-        #adTriggerLayer { position: absolute; top: 50px; left: 0; width: 100%; height: 50vh; z-index: 10001; background: rgba(0,0,0,0); cursor: pointer; border-radius: 15px; }
+        /* تم تعطيل الطبقة التي كانت تفتح الإعلان */
+        #adTriggerLayer { display: none; }
         .back-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 8px 30px; border-radius: 20px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
         .disclaimer-box { width: 100%; max-width: 850px; background: #16191d; border-radius: 10px; padding: 20px; margin: 20px auto; border-top: 3px solid var(--main-red); box-sizing: border-box; }
         .disclaimer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 11px; color: #888; line-height: 1.6; }
@@ -73,9 +72,7 @@
     </div>
 
     <div class="ad-banner-720">
-        <a href="https://rm358.com/4/10700846" target="_blank">
-            <div class="banner-content banner-1">🚀 Unlock Premium HD Channels - Click to Start</div>
-        </a>
+        <div class="banner-content banner-1">🚀 MYTVPRO PREMIUM HD - ENJOY WATCHING</div>
     </div>
 
     <div class="search-container">
@@ -85,9 +82,7 @@
     <div id="moviesGrid" class="movie-grid"></div>
 
     <div class="ad-banner-720">
-        <a href="https://rm358.com/4/10700846" target="_blank">
-            <div class="banner-content banner-2">📺 4K Streaming Server Active - Click to Watch</div>
-        </a>
+        <div class="banner-content banner-2">📺 4K STREAMING SERVER ACTIVE</div>
     </div>
 
     <footer class="disclaimer-box">
@@ -100,12 +95,9 @@
     <div id="videoPlayerContainer">
         <div class="player-wrapper">
             <button class="back-btn" id="backBtnText" onclick="closePlayer()">BACK</button>
-            <div id="adTriggerLayer" onclick="triggerSmartLink()"></div>
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
             <div class="ad-banner-720">
-                <a href="https://rm358.com/4/10700846" target="_blank">
-                    <div class="banner-content banner-3">💎 ACTIVATE ULTRA HD - CLICK TO BOOST QUALITY</div>
-                </a>
+                <div class="banner-content banner-3">💎 ULTRA HD QUALITY ENABLED</div>
             </div>
             <div class="disclaimer-box" style="margin-top: 10px;">
                 <div class="disclaimer-grid">
@@ -117,8 +109,8 @@
     </div>
 
     <script>
-        const _0x5a2d=['715fb05852af662217013d8380237f2a','https://rm358.com/4/10700846','movie','en','active','getElementById','btnMovies','btnSeries','classList','toggle','fetch','json','renderGrid','innerHTML','map','onclick','openPlayer','poster_path','title','name','join','value','search','src','https://vidsrc.me/embed/','?tmdb=','block','none','scrollTo'];
-        const API_KEY = _0x5a2d[0]; const SMART_LINK = _0x5a2d[1]; let currentType = _0x5a2d[2], currentLang = _0x5a2d[3];
+        const _0x5a2d=['715fb05852af662217013d8380237f2a','','movie','en','active','getElementById','btnMovies','btnSeries','classList','toggle','fetch','json','renderGrid','innerHTML','map','onclick','openPlayer','poster_path','title','name','join','value','search','src','https://vidsrc.me/embed/','?tmdb=','block','none','scrollTo'];
+        const API_KEY = _0x5a2d[0]; let currentType = _0x5a2d[2], currentLang = _0x5a2d[3];
         const i18n = {en:{search:"Search movies & series...",back:"BACK",movies:"Movies",series:"Series"},fr:{search:"Chercher films et séries...",back:"RETOUR",movies:"Films",series:"Séries"},de:{search:"Filme und Serien suchen...",back:"ZURÜCK",movies:"Filme",series:"Serien"},nl:{search:"Zoek films et series...",back:"TERUG",movies:"Films",series:"Series"}};
         
         function changeLanguage(_0x1){currentLang=_0x1;document.querySelectorAll('.lang-btn').forEach(_0x2=>_0x2.classList.remove(_0x5a2d[4]));document[_0x5a2d[5]]('lang-'+_0x1).classList.add(_0x5a2d[4]);document[_0x5a2d[5]]('searchInput').placeholder=i18n[_0x1].search;document[_0x5a2d[5]]('backBtnText').innerText=i18n[_0x1].back;document[_0x5a2d[5]](_0x5a2d[6]).innerText=i18n[_0x1].movies;document[_0x5a2d[5]](_0x5a2d[7]).innerText=i18n[_0x1].series;loadContent(currentType);}
@@ -126,17 +118,12 @@
         function renderGrid(_0x6){document[_0x5a2d[5]]('moviesGrid')[_0x5a2d[13]]=_0x6[_0x5a2d[14]](_0x7=>`<div class="movie-card" onclick="openPlayer('${_0x7.id}')"><img src="https://image.tmdb.org/t/p/w500${_0x7[_0x5a2d[17]]}"><div class="movie-title">${_0x7[_0x5a2d[18]]||_0x7[_0x5a2d[19]]}</div></div>`)[_0x5a2d[20]]('');}
         async function handleSearch(_0x8){const _0x9=_0x8.target[_0x5a2d[21]];if(_0x9.length>2){const _0xa=await fetch(`https://api.themoviedb.org/3/${_0x5a2d[22]}/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${_0x9}`);const _0xb=await _0xa[_0x5a2d[11]]();renderGrid(_0xb.results);}else if(_0x9.length===0){loadContent(currentType);}}
 
-        function triggerSmartLink(){
-            window.open(SMART_LINK,'_blank');
-            setTimeout(function() {
-                document[_0x5a2d[5]]('adTriggerLayer').style.display=_0x5a2d[27];
-            }, 100);
-        }
+        // تم تعطيل وظيفة الإعلان نهائياً
+        function triggerSmartLink() { return; }
 
         function openPlayer(_0xc){
             document[_0x5a2d[5]]('mainPlayer')[_0x5a2d[23]]=`${_0x5a2d[24]}${currentType}${_0x5a2d[25]}${_0xc}`;
             document[_0x5a2d[5]]('videoPlayerContainer').style.display=_0x5a2d[26];
-            document[_0x5a2d[5]]('adTriggerLayer').style.display=_0x5a2d[26];
             window[_0x5a2d[28]](0,0);
         }
 
