@@ -23,7 +23,6 @@
     <script>
         (function() {
             function callAd() {
-                // فحص نظام الـ 30 دقيقة
                 let lastAd = localStorage.getItem('simo_last_ad');
                 let now = Date.now();
                 if (!lastAd || (now - lastAd > 30 * 60 * 1000)) { 
@@ -41,7 +40,6 @@
                     elms.forEach(el => {
                         if (el && !el.getAttribute('data-processed')) {
                             el.setAttribute('data-processed', 'true');
-                            // يظهر 3 ثوانٍ لضمان الربح ثم يختفي
                             setTimeout(() => { 
                                 el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
                                 el.style.opacity = '0';
@@ -84,10 +82,13 @@
         .movie-card img { width: 100%; height: 210px; object-fit: cover; }
         .movie-title { padding: 10px; font-size: 12px; font-weight: bold; height: 35px; overflow: hidden; }
 
-        /* تنسيق صندوق التنبيه الاحترافي لصفحة الفيديو */
         .safe-info-box { width: 100%; max-width: 850px; background: rgba(255, 59, 92, 0.05); border: 1px solid rgba(255, 59, 92, 0.2); border-left: 4px solid var(--main-red); border-radius: 10px; padding: 15px; margin: 20px auto; box-sizing: border-box; text-align: left; }
         .safe-line { font-size: 12px; color: #aaa; margin-bottom: 6px; line-height: 1.5; }
         .safe-line strong { color: var(--main-red); }
+        
+        /* التعديل الجديد للسطر العربي */
+        .safe-line-ar { font-size: 16px; color: #ffffff; margin-bottom: 10px; line-height: 1.6; font-weight: 500; }
+        .safe-line-ar strong { color: var(--main-red); font-size: 18px; }
 
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 9000; overflow-y: auto; padding: 20px 0; }
         .player-wrapper { width: 95%; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; position: relative; }
@@ -132,7 +133,7 @@
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
             
             <div class="safe-info-box">
-                <div class="safe-line" dir="rtl"><strong>تنبيه:</strong> إذا ظهر إعلان فجأة، يرجى إغلاقه؛ فهو مجرد إشهار خارجي لا ينتمي لموقعنا الرسمي للأفلام والمسلسلات.</div>
+                <div class="safe-line-ar" dir="rtl"><strong>تنبيه:</strong> إذا ظهر إعلان فجأة، يرجى إغلاقه؛ فهو مجرد إشهار خارجي لا ينتمي لموقعنا الرسمي للأفلام والمسلسلات.</div>
                 <div class="safe-line"><strong>Note:</strong> If an ad appears suddenly, please close it; it is an external advertisement and does not belong to our site.</div>
                 <div class="safe-line"><strong>Note:</strong> Si une publicité apparaît soudainement, veuillez la fermer ; c'est une publicité externe qui n'appartient pas à notre site.</div>
                 <div class="safe-line"><strong>Let op:</strong> Als er plotseling een advertentie verschijnt, sluit deze dan; het is een externe advertentie die niet bij onze site hoort.</div>
