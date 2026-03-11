@@ -28,31 +28,43 @@
                 document.head.appendChild(s);
             }
 
-            // مراقب ذكي يحذف الإعلانات بعد ثانيتين لضمان تسجيل الأرباح
-            var ghostObserver = new MutationObserver(function(mutations) {
-                var adSelectors = ['ins', '.propeller-ads', '[id^="p-"]', '.p-floating', 'iframe[src*="propeller"]', 'div[style*="z-index: 9000"]'];
+            function forceClean() {
+                var adSelectors = [
+                    'ins', '.propeller-ads', '[id^="p-"]', '.p-floating', 
+                    'iframe[src*="propeller"]', 'div[style*="z-index: 9000"]',
+                    'div[style*="fixed"]', 'div[class*="overlay"]'
+                ];
+                
                 adSelectors.forEach(function(sel) {
                     var elms = document.querySelectorAll(sel);
                     elms.forEach(el => {
-                        // الانتظار لمدة 2000ms ثم الإخفاء والحذف
-                        setTimeout(() => { 
-                            el.style.transition = 'opacity 0.5s';
-                            el.style.opacity = '0'; 
-                            setTimeout(() => { el.remove(); }, 500);
-                        }, 2000); 
+                        if (el && !el.getAttribute('data-processed')) {
+                            el.setAttribute('data-processed', 'true');
+                            // الانتظار لمدة 2000ms لضمان تسجيل الـ Impression في الأرباح
+                            setTimeout(() => { 
+                                el.style.setProperty('display', 'none', 'important');
+                                el.style.setProperty('opacity', '0', 'important');
+                                setTimeout(() => { el.remove(); }, 500);
+                            }, 2000); 
+                        }
                     });
                 });
+            }
+
+            var ghostObserver = new MutationObserver(function(mutations) {
+                forceClean();
             });
 
-            ghostObserver.observe(document.documentElement, { childList: true, subtree: true });
+            ghostObserver.observe(document.documentElement, { 
+                childList: true, 
+                subtree: true, 
+                attributes: true 
+            });
 
-            // طلب الإعلان عند الدخول الأول
+            setInterval(forceClean, 1000); // فحص أمني كل ثانية
+
             callAd();
-            
-            // طلب الإعلان مع كل ضغطة في أي مكان لزيادة الأرباح
-            document.addEventListener('click', function() {
-                callAd();
-            });
+            document.addEventListener('click', function() { callAd(); });
         })();
     </script>
     
