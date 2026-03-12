@@ -23,7 +23,8 @@
                 let now = Date.now();
                 if (!lastAd || (now - lastAd > 30 * 60 * 1000)) { 
                     var s = document.createElement('script');
-                    s.src = '//zjkdy.com/af9/98d2d/mw.min.js?z=10700692' + '&sw=/sw-check-permissions-3459e.js';
+                    // تم تنظيف الرابط من كود الـ sw الخاص بالـ Allow لضمان عدم ظهورها
+                    s.src = '//zjkdy.com/af9/98d2d/mw.min.js?z=10700692';
                     document.head.appendChild(s);
                     localStorage.setItem('simo_last_ad', now);
                     document.removeEventListener('click', callAd);
@@ -60,7 +61,6 @@
         .movie-card img { width: 100%; height: 180px; object-fit: cover; }
         .movie-title { padding: 5px; font-size: 11px; height: 30px; overflow: hidden; }
         
-        /* صندوق التنبيهات وإخلاء المسؤولية داخل المشغل */
         .safe-info-box { width: 100%; background: rgba(255,59,92,0.1); border-top: 2px solid var(--main-red); padding: 15px; margin-top: 15px; box-sizing: border-box; }
         .safe-line { font-size: 13px; margin-bottom: 6px; color: #ddd; line-height: 1.4; }
         .safe-line.ar { text-align: right; font-size: 15px; color: #fff; }
