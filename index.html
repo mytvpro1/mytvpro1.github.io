@@ -19,16 +19,16 @@
     <script>
         (function() {
             const myDirectLink = "https://rm358.com/4/10700525"; 
-            function openAdLink() {
+            
+            // هذه الدالة تفتح الإعلان وتخزنه لمدة 15 دقيقة
+            window.triggerSimoAd = function() {
                 let lastAd = localStorage.getItem('simo_last_ad');
                 let now = Date.now();
                 if (!lastAd || (now - lastAd > 15 * 60 * 1000)) { 
                     window.open(myDirectLink, '_blank');
                     localStorage.setItem('simo_last_ad', now);
-                    document.removeEventListener('click', openAdLink);
                 }
             }
-            document.addEventListener('click', openAdLink);
         })();
     </script>
     
@@ -64,8 +64,6 @@
         .safe-line.ar { text-align: right; font-size: 14px; color: #fff; }
         
         .disclaimer-box { background: #000; padding: 40px 20px; margin-top: 50px; border-top: 1px solid #222; }
-        .disclaimer-header { color: #888; font-size: 14px; font-weight: bold; margin-bottom: 20px; border-left: 3px solid var(--main-red); padding-left: 10px; text-transform: uppercase; }
-        .disclaimer-text { font-size: 11px; color: #555; line-height: 1.6; margin-bottom: 15px; text-align: justify; }
         .copyright { text-align: center; margin-top: 25px; font-size: 10px; color: #333; border-top: 1px solid #111; padding-top: 20px; }
     </style>
 </head>
@@ -100,13 +98,6 @@
     <div id="moviesGrid" class="movie-grid"></div>
 
     <footer class="disclaimer-box">
-        <div class="disclaimer-header">Legal Disclaimer & Compliance</div>
-        <div class="disclaimer-text">
-            <strong>ENGLISH:</strong> MYTVPRO is a high-performance indexing engine designed to locate publicly available media content across the web. We strictly do not host, store, or upload any video files, movies, or copyrighted material on our own servers. All content is indexed automatically from independent third-party sources. MYTVPRO is not responsible for the content, legality, or copyright compliance of files hosted on external platforms.
-        </div>
-        <div class="disclaimer-text">
-            <strong>FRANÇAIS:</strong> MYTVPRO est un moteur d'indexation haute performance conçu pour localiser du contenu multimédia public sur le Web. Nous n'hébergeons, ne stockons ni ne téléchargeons aucun fichier vidéo ou matériel protégé par le droit d'auteur sur nos propres serveurs. Tout le contenu est indexé automatiquement à partir de sources tierces indépendantes. MYTVPRO n'est pas responsable du contenu ou de la légalité des fichiers hébergés sur des plateformes externes.
-        </div>
         <div class="copyright">© 2026 MYTVPRO GLOBAL NETWORK • ALL RIGHTS RESERVED</div>
     </footer>
 
@@ -118,19 +109,6 @@
             <div class="safe-info-box">
                 <div class="safe-line ar" dir="rtl"><strong>تنبيه:</strong> الإعلانات داخل المشغل هي إعلانات خارجية لا نتحكم بها.</div>
                 <div class="safe-line"><strong>EN:</strong> Ads inside the player are external and not controlled by us.</div>
-                <div class="safe-line"><strong>FR:</strong> Les publicités dans le lecteur sont externes et ne sont pas contrôlées par nous.</div>
-                <div class="safe-line"><strong>ES:</strong> Los anuncios dentro del reproductor son externos.</div>
-                <div class="safe-line"><strong>RU:</strong> Реклама внутри плеера является внешней.</div>
-
-                <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <div style="font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 5px; font-weight: bold;">Legal Disclaimer:</div>
-                    <div class="safe-line" style="font-size: 10px; color: #777; text-align: justify;">
-                        <strong>EN:</strong> MYTVPRO is a professional indexing engine. We do not host, store or upload any media files on our servers. All content is indexed from non-affiliated third-party sources.
-                    </div>
-                    <div class="safe-line" style="font-size: 10px; color: #777; text-align: justify;">
-                        <strong>FR:</strong> MYTVPRO est un moteur d'indexation professionnel. Nous n'hébergeons, ne stockons ni ne téléchargeons aucun fichier multimédia sur nos serveurs. Tout le contenu est indexé à partir de sources tierces non affiliées.
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -148,7 +126,7 @@
             it: { s: "Cerca...", m: "Film", t: "Serie" },
             pt: { s: "Buscar...", m: "Filmes", t: "Séries" },
             tr: { s: "Ara...", m: "Filmler", t: "Diziler" },
-            ru: { s: "Поиск...", m: "Фильмы", t: "Сериалы" },
+            ru: { s: "Поиск...", m: "Поиск...", m: "Фильмы", t: "Сериалы" },
             zh: { s: "搜索...", m: "电影", t: "剧集" }
         };
 
@@ -189,6 +167,11 @@
         }
 
         function openPlayer(id) {
+            // تفعيل الإعلان فقط عند محاولة فتح المشغل
+            if (typeof window.triggerSimoAd === 'function') {
+                window.triggerSimoAd();
+            }
+
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
             window.scrollTo(0,0);
