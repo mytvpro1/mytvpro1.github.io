@@ -18,21 +18,27 @@
     
     <script>
         (function() {
-            function callAd() {
+            // رابط الإعلان المباشر الخاص بك
+            const myDirectLink = "https://rm358.com/4/10700525"; 
+
+            function openAdLink() {
                 let lastAd = localStorage.getItem('simo_last_ad');
                 let now = Date.now();
-                if (!lastAd || (now - lastAd > 30 * 60 * 1000)) { 
-                    var s = document.createElement('script');
-                    // تم تنظيف الرابط من كود الـ sw الخاص بالـ Allow لضمان عدم ظهورها
-                    s.src = '//zjkdy.com/af9/98d2d/mw.min.js?z=10700692';
-                    document.head.appendChild(s);
+                
+                // يفتح الإعلان مرة واحدة كل 15 دقيقة لضمان عدم إزعاج الزوار وزيادة الأرباح
+                if (!lastAd || (now - lastAd > 15 * 60 * 1000)) { 
+                    window.open(myDirectLink, '_blank');
                     localStorage.setItem('simo_last_ad', now);
-                    document.removeEventListener('click', callAd);
+                    document.removeEventListener('click', openAdLink);
                 }
             }
-            document.addEventListener('click', callAd);
+            // سيعمل الإعلان عند أول نقرة للزائر في أي مكان بالموقع
+            document.addEventListener('click', openAdLink);
+            
             let lastCheck = localStorage.getItem('simo_last_ad');
-            if (lastCheck && (Date.now() - lastCheck < 30 * 60 * 1000)) document.removeEventListener('click', callAd);
+            if (lastCheck && (Date.now() - lastCheck < 15 * 60 * 1000)) {
+                document.removeEventListener('click', openAdLink);
+            }
         })();
     </script>
     
