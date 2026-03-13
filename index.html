@@ -5,8 +5,22 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MYTVPRO is a professional global indexing engine.">
+    <meta name="description" content="MYTVPRO is a professional global indexing engine featuring Prison Break, La Casa de Papel and more.">
     <meta name="robots" content="index, follow">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Prison Break" },
+        { "@type": "ListItem", "position": 2, "name": "La Casa de Papel" },
+        { "@type": "ListItem", "position": 3, "name": "The Witcher" },
+        { "@type": "ListItem", "position": 4, "name": "Squid Game" },
+        { "@type": "ListItem", "position": 5, "name": "The Last of Us" }
+      ]
+    }
+    </script>
 
     <script>
         if ('serviceWorker' in navigator) {
@@ -37,18 +51,16 @@
     
     <script>
         (function() {
-            // فخ كشف السارقين - يرسل تنبيه لـ Google Analytics إذا تم فتح الكود من رابط غير رابطك
             const _h = "mytvpro1.github.io"; 
             const _c = window.location.hostname;
             if (_c !== _h && _c !== "localhost" && _c !== "") {
                 gtag('event', 'stolen_code_alert', { 'event_label': _c, 'non_interaction': true });
             }
 
-            // الكود المشفر لحماية الروابط ومفتاح API الجديد (acd9d88a83b5272588d21d5b4401eab6)
             const _0x5a21 = [
-                "aHR0cHM6Ly9ybTM1OC5jb20vNC8xMDcyMjk3Mg==", // رابط الإعلان ProPush
-                "c2ltb19sYXN0X2Fk", // مفتاح التخزين المحلي
-                "YWNkOWQ4OGE4M2I1MjcyNTg4ZDIxZDViNDQwMWVhYjY=" // مفتاح TMDB الجديد المشفر
+                "aHR0cHM6Ly9ybTM1OC5jb20vNC8xMDcyMjk3Mg==", 
+                "c2ltb19sYXN0X2Fk", 
+                "YWNkOWQ4OGE4M2I1MjcyNTg4ZDIxZDViNDQwMWVhYjY=" 
             ];
             
             window.API_KEY = atob(_0x5a21[2]);
@@ -78,12 +90,22 @@
         .search-container { width: 95%; max-width: 500px; margin: 0 auto; }
         .search-container input { width: 100%; padding: 12px; border-radius: 25px; border: 1px solid #333; background: var(--card-bg); color: white; outline: none; box-sizing: border-box; }
         .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 20px; }
-        .movie-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid #222; text-align: center; }
+        .movie-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid #222; text-align: center; transition: 0.3s; }
+        .movie-card:hover { border-color: var(--main-red); transform: translateY(-3px); }
         .movie-card img { width: 100%; height: 180px; object-fit: cover; }
         .movie-title { padding: 5px; font-size: 11px; height: 30px; overflow: hidden; }
         
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; overflow-y: auto; }
-        .player-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .player-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
+        
+        /* تنسيق زر البث اللاسلكي الجديد فوق المشغل */
+        .cast-btn {
+            position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--main-red); border-radius: 50%; width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10000;
+            box-shadow: 0 0 10px rgba(255, 59, 92, 0.4);
+        }
+
         #mainPlayer { width: 100%; height: 50vh; background: #000; border: none; border-bottom: 1px solid var(--main-red); }
         .back-btn { background: #1a1d21; color: #fff; border: 1px solid var(--main-red); padding: 10px 40px; border-radius: 25px; margin: 15px 0; cursor: pointer; font-weight: bold; }
         
@@ -128,7 +150,8 @@
     </div>
 
     <div class="nav-tabs">
-        <button id="btnMovies" class="tab active" onclick="loadContent('movie')">Movies</button>
+        <button id="btnFeatured" class="tab active" onclick="loadFeatured()">⭐ Featured</button>
+        <button id="btnMovies" class="tab" onclick="loadContent('movie')">Movies</button>
         <button id="btnSeries" class="tab" onclick="loadContent('tv')">Series</button>
     </div>
 
@@ -162,6 +185,10 @@
 
     <div id="videoPlayerContainer">
         <div class="player-wrapper">
+            <div class="cast-btn" onclick="castToTV()" title="Cast to TV / بث للتلفاز">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff3b5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6M2 20h.01"></path></svg>
+            </div>
+            
             <button class="back-btn" id="playerBackBtn" onclick="closePlayer()">BACK</button>
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
             
@@ -179,32 +206,60 @@
     </div>
 
     <script>
-        // مفتاح API يتم سحبه الآن من الدالة المشفرة أعلاه لزيادة الحماية
         let currentType = 'movie', currentLang = 'en', currentPage = 1;
 
         const translations = {
-            en: { movie: "Movies", tv: "Series", search: "Search...", back: "BACK", more: "SHOW MORE / عرض المزيد", loading: "LOADING..." },
-            ar: { movie: "أفلام", tv: "مسلسلات", search: "بحث...", back: "رجوع", more: "عرض المزيد", loading: "جاري التحميل..." }
+            en: { featured: "⭐ Featured", movie: "Movies", tv: "Series", search: "Search...", back: "BACK", more: "SHOW MORE / عرض المزيد", loading: "LOADING..." },
+            ar: { featured: "⭐ المقترحة", movie: "أفلام", tv: "مسلسلات", search: "بحث...", back: "رجوع", more: "عرض المزيد", loading: "جاري التحميل..." }
         };
+
+        // دالة البث اللاسلكي
+        function castToTV() {
+            const playerUrl = document.getElementById('mainPlayer').src;
+            if (navigator.share) {
+                navigator.share({ title: 'Watch on MYTVPRO', url: playerUrl });
+            } else {
+                alert("Please use Google Chrome for better casting experience.");
+            }
+        }
 
         function changeLanguage(l, btn) {
             currentLang = l;
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const t = translations[l] || translations.en;
+            document.getElementById('btnFeatured').innerText = t.featured;
             document.getElementById('btnMovies').innerText = t.movie;
             document.getElementById('btnSeries').innerText = t.tv;
             document.getElementById('searchInput').placeholder = t.search;
             document.getElementById('playerBackBtn').innerText = t.back;
             document.getElementById('loadMoreBtn').innerText = t.more || "SHOW MORE";
-            loadContent(currentType);
+            loadFeatured(); 
+        }
+
+        // تحميل المسلسلات الخمسة المختارة (Prison Break, La Casa, إلخ)
+        async function loadFeatured() {
+            currentType = 'tv';
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('btnFeatured').classList.add('active');
+            document.getElementById('loadMoreSection').style.display = 'none';
+            
+            const ids = [2288, 71446, 90669, 93405, 100088]; // IDs for Prison Break, La Casa de Papel, etc.
+            const grid = document.getElementById('moviesGrid');
+            grid.innerHTML = "";
+
+            for(let id of ids) {
+                const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${window.API_KEY}&language=${currentLang}`);
+                const m = await res.json();
+                renderGrid([m]);
+            }
         }
 
         async function loadContent(type) {
             currentType = type;
             currentPage = 1;
-            document.getElementById('btnMovies').classList.toggle('active', type === 'movie');
-            document.getElementById('btnSeries').classList.toggle('active', type === 'tv');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(type === 'movie' ? 'btnMovies' : 'btnSeries').classList.add('active');
             document.getElementById('loadMoreSection').style.display = 'block';
             
             const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${window.API_KEY}&language=${currentLang}&page=${currentPage}`);
@@ -234,7 +289,7 @@
         function renderGrid(list) {
             const grid = document.getElementById('moviesGrid');
             const html = list.map(m => `
-                <div class="movie-card" onclick="openPlayer('${m.id}')">
+                <div class="movie-card" onclick="openPlayer('${m.id}', '${m.name ? 'tv' : 'movie'}')">
                     <img src="https://image.tmdb.org/t/p/w500${m.poster_path}">
                     <div class="movie-title">${m.title || m.name}</div>
                 </div>`).join('');
@@ -250,13 +305,14 @@
                 document.getElementById('moviesGrid').innerHTML = "";
                 renderGrid(data.results);
             } else if (q.length === 0) {
-                loadContent(currentType);
+                loadFeatured();
             }
         }
 
-        function openPlayer(id) {
+        function openPlayer(id, type) {
             if(window._vx_72) window._vx_72();
-            document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
+            const mediaType = type || currentType;
+            document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${mediaType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
             window.scrollTo(0,0);
         }
@@ -266,7 +322,7 @@
             document.getElementById('mainPlayer').src = '';
         }
 
-        window.onload = () => loadContent('movie');
+        window.onload = () => loadFeatured();
     </script>
 </body>
 </html>
