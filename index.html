@@ -37,7 +37,8 @@
     
     <script>
         (function() {
-            const myDirectLink = "https://rm358.com/4/10700525"; 
+            // تم تحديث الرقم هنا ليتطابق مع لوحة تحكم ProPush الخاصة بك
+            const myDirectLink = "https://rm358.com/4/10722972"; 
             window.triggerSimoAd = function() {
                 let lastAd = localStorage.getItem('simo_last_ad');
                 let now = Date.now();
@@ -86,7 +87,6 @@
         .player-detailed-legal { font-size: 11px; color: #666; line-height: 1.5; text-align: justify; }
         .player-detailed-legal p { margin: 10px 0; }
 
-        /* تنسيق زر عرض المزيد */
         .load-more-container { text-align: center; margin: 30px 0; }
         .load-more-btn { background: transparent; color: var(--main-red); border: 2px solid var(--main-red); padding: 10px 30px; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .load-more-btn:hover { background: var(--main-red); color: white; }
@@ -171,7 +171,6 @@
         const translations = {
             en: { movie: "Movies", tv: "Series", search: "Search...", back: "BACK", more: "SHOW MORE / عرض المزيد", loading: "LOADING..." },
             ar: { movie: "أفلام", tv: "مسلسلات", search: "بحث...", back: "رجوع", more: "عرض المزيد", loading: "جاري التحميل..." }
-            // باقي اللغات يتم التعامل معها بنفس المنطق
         };
 
         function changeLanguage(l, btn) {
@@ -197,7 +196,7 @@
             const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${API_KEY}&language=${currentLang}&page=${currentPage}`);
             const data = await res.json();
             
-            document.getElementById('moviesGrid').innerHTML = ""; // مسح المحتوى عند تبديل النوع
+            document.getElementById('moviesGrid').innerHTML = ""; 
             renderGrid(data.results);
         }
 
@@ -225,7 +224,7 @@
                     <img src="https://image.tmdb.org/t/p/w500${m.poster_path}">
                     <div class="movie-title">${m.title || m.name}</div>
                 </div>`).join('');
-            grid.innerHTML += html; // إضافة الأفلام الجديدة للقديمة
+            grid.innerHTML += html; 
         }
 
         async function handleSearch(e) {
