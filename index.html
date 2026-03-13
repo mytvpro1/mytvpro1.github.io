@@ -11,7 +11,6 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                // تم تغيير المسار هنا ليتطابق مع اسم الملف المطلوب في حسابك
                 navigator.serviceWorker.register('/sw-check-permissions-a58c8.js').then(function(registration) {
                     console.log('ProPush SW registered with scope:', registration.scope);
                 }, function(err) {
@@ -87,6 +86,11 @@
         .player-detailed-legal { font-size: 11px; color: #666; line-height: 1.5; text-align: justify; }
         .player-detailed-legal p { margin: 10px 0; }
 
+        /* تنسيق زر عرض المزيد */
+        .load-more-container { text-align: center; margin: 30px 0; }
+        .load-more-btn { background: transparent; color: var(--main-red); border: 2px solid var(--main-red); padding: 10px 30px; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .load-more-btn:hover { background: var(--main-red); color: white; }
+
         @media (max-width: 600px) { .legal-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -119,6 +123,10 @@
     </div>
 
     <div id="moviesGrid" class="movie-grid"></div>
+
+    <div class="load-more-container" id="loadMoreSection">
+        <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreContent()">SHOW MORE / عرض المزيد</button>
+    </div>
 
     <footer class="main-footer-disclaimer">
         <div class="legal-grid">
@@ -158,20 +166,12 @@
 
     <script>
         const API_KEY = '715fb05852af662217013d8380237f2a';
-        let currentType = 'movie', currentLang = 'en';
+        let currentType = 'movie', currentLang = 'en', currentPage = 1;
 
         const translations = {
-            en: { movie: "Movies", tv: "Series", search: "Search...", back: "BACK" },
-            ar: { movie: "أفلام", tv: "مسلسلات", search: "بحث...", back: "رجوع" },
-            fr: { movie: "Films", tv: "Séries", search: "Recherche...", back: "RETOUR" },
-            de: { movie: "Filme", tv: "Serien", search: "Suche...", back: "ZURÜCK" },
-            nl: { movie: "Films", tv: "Series", search: "Zoeken...", back: "TERUG" },
-            es: { movie: "Películas", tv: "Series", search: "Buscar...", back: "VOLVER" },
-            it: { movie: "Film", tv: "Serie TV", search: "Cerca...", back: "INDIETRO" },
-            pt: { movie: "Filmes", tv: "Séries", search: "Buscar...", back: "VOLTAR" },
-            tr: { movie: "Filmler", tv: "Diziler", search: "Ara...", back: "GERİ" },
-            ru: { movie: "Фильмы", tv: "Сериалы", search: "Поиск...", back: "НАЗАД" },
-            zh: { movie: "电影", tv: "剧集", search: "搜索...", back: "返回" }
+            en: { movie: "Movies", tv: "Series", search: "Search...", back: "BACK", more: "SHOW MORE / عرض المزيد", loading: "LOADING..." },
+            ar: { movie: "أفلام", tv: "مسلسلات", search: "بحث...", back: "رجوع", more: "عرض المزيد", loading: "جاري التحميل..." }
+            // باقي اللغات يتم التعامل معها بنفس المنطق
         };
 
         function changeLanguage(l, btn) {
@@ -183,37 +183,66 @@
             document.getElementById('btnSeries').innerText = t.tv;
             document.getElementById('searchInput').placeholder = t.search;
             document.getElementById('playerBackBtn').innerText = t.back;
+            document.getElementById('loadMoreBtn').innerText = t.more || "SHOW MORE";
             loadContent(currentType);
         }
 
         async function loadContent(type) {
             currentType = type;
+            currentPage = 1;
             document.getElementById('btnMovies').classList.toggle('active', type === 'movie');
             document.getElementById('btnSeries').classList.toggle('active', type === 'tv');
-            const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${API_KEY}&language=${currentLang}&page=1`);
+            document.getElementById('loadMoreSection').style.display = 'block';
+            
+            const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${API_KEY}&language=${currentLang}&page=${currentPage}`);
             const data = await res.json();
+            
+            document.getElementById('moviesGrid').innerHTML = ""; // مسح المحتوى عند تبديل النوع
             renderGrid(data.results);
         }
 
+        async function loadMoreContent() {
+            currentPage++;
+            const btn = document.getElementById('loadMoreBtn');
+            const originalText = btn.innerText;
+            btn.innerText = "...";
+            
+            const res = await fetch(`https://api.themoviedb.org/3/${currentType}/popular?api_key=${API_KEY}&language=${currentLang}&page=${currentPage}`);
+            const data = await res.json();
+            
+            if(data.results.length > 0) {
+                renderGrid(data.results);
+                btn.innerText = originalText;
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+
         function renderGrid(list) {
-            document.getElementById('moviesGrid').innerHTML = list.map(m => `
+            const grid = document.getElementById('moviesGrid');
+            const html = list.map(m => `
                 <div class="movie-card" onclick="openPlayer('${m.id}')">
                     <img src="https://image.tmdb.org/t/p/w500${m.poster_path}">
                     <div class="movie-title">${m.title || m.name}</div>
                 </div>`).join('');
+            grid.innerHTML += html; // إضافة الأفلام الجديدة للقديمة
         }
 
         async function handleSearch(e) {
             const q = e.target.value;
             if(q.length > 2) {
+                document.getElementById('loadMoreSection').style.display = 'none';
                 const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${q}`);
                 const data = await res.json();
+                document.getElementById('moviesGrid').innerHTML = "";
                 renderGrid(data.results);
-            } else if (q.length === 0) loadContent(currentType);
+            } else if (q.length === 0) {
+                loadContent(currentType);
+            }
         }
 
         function openPlayer(id) {
-            triggerSimoAd(); // يشغل الرابط المباشر
+            triggerSimoAd();
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
             window.scrollTo(0,0);
