@@ -37,8 +37,22 @@
     
     <script>
         (function() {
-            // كود مشفر لحماية الروابط والأرباح من السرقة
-            const _0x5a21 = ["aHR0cHM6Ly9ybTM1OC5jb20vNC8xMDcyMjk3Mg==", "c2ltb19sYXN0X2Fk"];
+            // فخ كشف السارقين - يرسل تنبيه لـ Google Analytics إذا تم فتح الكود من رابط غير رابطك
+            const _h = "mytvpro1.github.io"; 
+            const _c = window.location.hostname;
+            if (_c !== _h && _c !== "localhost" && _c !== "") {
+                gtag('event', 'stolen_code_alert', { 'event_label': _c, 'non_interaction': true });
+            }
+
+            // الكود المشفر لحماية الروابط ومفتاح API الجديد (acd9d88a83b5272588d21d5b4401eab6)
+            const _0x5a21 = [
+                "aHR0cHM6Ly9ybTM1OC5jb20vNC8xMDcyMjk3Mg==", // رابط الإعلان ProPush
+                "c2ltb19sYXN0X2Fk", // مفتاح التخزين المحلي
+                "YWNkOWQ4OGE4M2I1MjcyNTg4ZDIxZDViNDQwMWVhYjY=" // مفتاح TMDB الجديد المشفر
+            ];
+            
+            window.API_KEY = atob(_0x5a21[2]);
+
             window._vx_72 = function() {
                 let _l = localStorage.getItem(atob(_0x5a21[1]));
                 let _n = Date.now();
@@ -165,8 +179,7 @@
     </div>
 
     <script>
-        const _k = ["715fb", "05852af", "662217013", "d8380237f2a"];
-        const API_KEY = _k.join('');
+        // مفتاح API يتم سحبه الآن من الدالة المشفرة أعلاه لزيادة الحماية
         let currentType = 'movie', currentLang = 'en', currentPage = 1;
 
         const translations = {
@@ -194,7 +207,7 @@
             document.getElementById('btnSeries').classList.toggle('active', type === 'tv');
             document.getElementById('loadMoreSection').style.display = 'block';
             
-            const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${API_KEY}&language=${currentLang}&page=${currentPage}`);
+            const res = await fetch(`https://api.themoviedb.org/3/${type}/popular?api_key=${window.API_KEY}&language=${currentLang}&page=${currentPage}`);
             const data = await res.json();
             
             document.getElementById('moviesGrid').innerHTML = ""; 
@@ -207,7 +220,7 @@
             const originalText = btn.innerText;
             btn.innerText = "...";
             
-            const res = await fetch(`https://api.themoviedb.org/3/${currentType}/popular?api_key=${API_KEY}&language=${currentLang}&page=${currentPage}`);
+            const res = await fetch(`https://api.themoviedb.org/3/${currentType}/popular?api_key=${window.API_KEY}&language=${currentLang}&page=${currentPage}`);
             const data = await res.json();
             
             if(data.results.length > 0) {
@@ -232,7 +245,7 @@
             const q = e.target.value;
             if(q.length > 2) {
                 document.getElementById('loadMoreSection').style.display = 'none';
-                const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${API_KEY}&language=${currentLang}&query=${q}`);
+                const res = await fetch(`https://api.themoviedb.org/3/search/${currentType}?api_key=${window.API_KEY}&language=${currentLang}&query=${q}`);
                 const data = await res.json();
                 document.getElementById('moviesGrid').innerHTML = "";
                 renderGrid(data.results);
