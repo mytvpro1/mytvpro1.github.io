@@ -5,9 +5,20 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="MYTVPRO is a professional global indexing engine. Stream your favorite movies and series online for free in HD. High-quality metadata indexing for international content.">
-    <meta name="keywords" content="watch movies free, stream series online, HD movies, global content index, MYTVPRO, free streaming UK, movie metadata">
+    <meta name="description" content="MYTVPRO is a professional global indexing engine.">
     <meta name="robots" content="index, follow">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ProPush SW registered with scope:', registration.scope);
+                }, function(err) {
+                    console.log('ProPush SW registration failed:', err);
+                });
+            });
+        }
+    </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9MPJ06VFY0"></script>
     <script>
@@ -112,15 +123,15 @@
         <div class="legal-grid">
             <div class="legal-item">
                 <span class="legal-tag">Legal Disclaimer</span>
-                MYTVPRO is a specialized web indexing engine. We do not host, store, or upload any media files or videos on our own servers. Our system automatically indexes links from external, third-party providers.
+                MYTVPRO is a specialized web indexing engine. We do not host, store, or upload any media files or videos on our own servers.
             </div>
             <div class="legal-item">
                 <span class="legal-tag">Clause de Non-Responsabilité</span>
-                MYTVPRO fonctionne comme un moteur de recherche et d'indexation. Nous n'hébergeons ni ne diffusons aucun fichier vidéo sur nos serveurs. Tous les contenus sont indexés à partir de plateformes tierces indépendantes.
+                MYTVPRO fonctionne comme un moteur de recherche. Nous n'hébergeons aucun fichier vidéo.
             </div>
             <div class="legal-item" style="grid-column: span 2; direction: rtl;">
                 <span class="legal-tag">إشعار قانوني</span>
-                يعمل موقع MYTVPRO كمحرك فهرسة وبحث متقدم فقط. نحن لا نقوم باستضافة أو تخزين أو رفع أي ملفات فيديو على خوادمنا الخاصة. جميع المحتويات التي يتم عرضها هي روابط مفهرسة تلقائيًا من مزودين خارجيين.
+                يعمل موقع MYTVPRO كمحرك فهرسة وبحث. نحن لا نستضيف أي ملفات فيديو على خوادمنا.
             </div>
         </div>
         <div class="footer-copyright-pro">© 2026 MYTVPRO GLOBAL INDEX • ALL RIGHTS RESERVED</div>
@@ -137,10 +148,8 @@
                     <div class="safe-line"><strong>NOTICE:</strong> Any advertisements appearing within the video player are from external third-party sources.</div>
                     <div class="safe-line"><strong>AVIS:</strong> Les publicités affichées dans le lecteur vidéo proviennent de sources externes.</div>
                 </div>
-
                 <div class="player-detailed-legal">
-                    <p><strong>Legal Notice:</strong> MYTVPRO provides an index of content hosted on other servers. We have no control over the advertisements, tracking, or content delivered by these third-party video providers. Usage is at your own risk.</p>
-                    <p><strong>Note Légale:</strong> MYTVPRO fournit un index des contenus hébergés sur d'autres serveurs. Nous n'avons aucun contrôle sur les publicités, le suivi ou le contenu diffusé par ces fournisseurs vidéo tiers. L'utilisation est à vos propres risques.</p>
+                    <p><strong>Legal Notice:</strong> MYTVPRO provides an index of content hosted on other servers. Usage is at your own risk.</p>
                 </div>
             </div>
         </div>
@@ -168,14 +177,11 @@
             currentLang = l;
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
             const t = translations[l] || translations.en;
             document.getElementById('btnMovies').innerText = t.movie;
             document.getElementById('btnSeries').innerText = t.tv;
             document.getElementById('searchInput').placeholder = t.search;
             document.getElementById('playerBackBtn').innerText = t.back;
-            
-            // هنا تم استدعاء تحميل المحتوى فقط بدون إعلانات
             loadContent(currentType);
         }
 
@@ -206,9 +212,7 @@
         }
 
         function openPlayer(id) {
-            // الإعلان يظهر حصرياً هنا عند الضغط لمشاهدة الفيلم/المسلسل
-            triggerSimoAd();
-            
+            triggerSimoAd(); // يشغل الرابط المباشر
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
             window.scrollTo(0,0);
