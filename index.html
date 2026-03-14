@@ -197,6 +197,7 @@
                 <div class="warning-section">
                     <div class="safe-line ar">تنبيه: الإعلانات التي تظهر داخل مشغل الفيديو هي إعلانات من مصادر خارجية ولا تتبع لموقعنا.</div>
                     <div class="safe-line"><strong>NOTICE:</strong> Any advertisements appearing within the video player are from external third-party sources.</div>
+                    <div class="safe-line"><strong>AVERTISSEMENT:</strong> Toutes les publicités apparaissant dans le lecteur vidéo proviennent de sources tierces externes.</div>
                 </div>
             </div>
         </div>
@@ -267,7 +268,6 @@
             const btn = document.getElementById('loadMoreBtn');
             btn.innerText = "...";
             
-            // تصحيح: إذا كنا في وضع Featured، نطلب مسلسلات مشهورة لإكمال القائمة
             let url = `https://api.themoviedb.org/3/${currentType}/popular?api_key=${window.API_KEY}&language=${currentLang}&page=${currentPage}`;
             
             const res = await fetch(url);
