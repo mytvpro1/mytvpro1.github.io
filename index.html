@@ -272,7 +272,6 @@
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.getElementById('btnFeatured').classList.add('active');
             
-            // التعديل هنا: إضافة أكثر من 10 عناوين تريند (أفلام ومسلسلات مختلطة)
             const featuredItems = [
                 { id: 93405, type: 'tv' },    // Squid Game
                 { id: 100088, type: 'tv' },   // The Last of Us
@@ -298,7 +297,6 @@
                     const res = await fetch(`https://api.themoviedb.org/3/${item.type}/${item.id}?api_key=${window.API_KEY}&language=${currentLang}`);
                     const m = await res.json();
                     if(m.id) {
-                        // تمرير نوع المحتوى الصحيح للدالة لضمان عمل المشغل
                         const html = `
                             <div class="movie-card" onclick="openPlayer('${m.id}', '${item.type}')">
                                 <img src="https://image.tmdb.org/t/p/w500${m.poster_path}">
@@ -308,7 +306,7 @@
                     }
                 } catch(e) {}
             }
-            document.getElementById('loadMoreSection').style.display = 'none'; // تعطيل "عرض المزيد" في Featured
+            document.getElementById('loadMoreSection').style.display = 'none'; 
         }
 
         async function loadGenre(genreId, type, btnId) {
@@ -367,13 +365,36 @@
             grid.innerHTML += html; 
         }
 
+        // --- التعديل الذكي للتحكم في الإعلانات كل 30 دقيقة ---
         function triggerAd() {
-            if(window.AdEngine) { window.AdEngine("//rm358.com/4/10722756"); }
+            const lastAdTime = localStorage.getItem('lastAdTimestamp');
+            const currentTime = new Date().getTime();
+            const thirtyMinutes = 30 * 60 * 1000;
+
+            if (!lastAdTime || (currentTime - lastAdTime > thirtyMinutes)) {
+                if(window.AdEngine) { 
+                    window.AdEngine("//rm358.com/4/10722756"); 
+                    localStorage.setItem('lastAdTimestamp', currentTime);
+                }
+            } else {
+                console.log("Ad skipped: 30 minutes haven't passed yet.");
+            }
             document.getElementById('adOverlay').style.display = 'none';
         }
 
         function openPlayer(id, type) {
-            document.getElementById('adOverlay').style.display = 'block';
+            // التحقق من الوقت قبل إظهار طبقة الإعلان الشفافة
+            const lastAdTime = localStorage.getItem('lastAdTimestamp');
+            const currentTime = new Date().getTime();
+            const thirtyMinutes = 30 * 60 * 1000;
+
+            // إذا لم يمر الوقت الكافي، لا نظهر طبقة الإعلان الشفافة ونفتح الفيلم مباشرة
+            if (lastAdTime && (currentTime - lastAdTime < thirtyMinutes)) {
+                document.getElementById('adOverlay').style.display = 'none';
+            } else {
+                document.getElementById('adOverlay').style.display = 'block';
+            }
+
             const mediaType = type || currentType;
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${mediaType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
