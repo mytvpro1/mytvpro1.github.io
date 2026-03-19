@@ -89,7 +89,6 @@
         :root { --main-red: #ff3b5c; --bg-dark: #0b0e11; --card-bg: #1a1d21; }
         body { background-color: var(--bg-dark); color: #fff; font-family: sans-serif; margin: 0; padding: 10px; user-select: none; overflow-x: hidden; }
         
-        /* --- تنسيق شاشة البداية المعدلة --- */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-dark);
@@ -129,7 +128,6 @@
         #mainPlayer { width: 100%; height: 50vh; background: #000; border: none; border-bottom: 1px solid var(--main-red); }
         .back-btn { background: #1a1d21; color: #fff; border: 1px solid var(--main-red); padding: 10px 40px; border-radius: 25px; margin: 15px 0; cursor: pointer; font-weight: bold; z-index: 10002; position: relative; }
         
-        /* --- تنسيق خانة تحميل التطبيق المضافة --- */
         .footer-app-box { text-align: center; padding: 30px 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; background: linear-gradient(145deg, #1a1d21, #0b0e11); border: 1px solid #222; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
         .footer-app-box h3 { color: var(--main-red); margin: 0 0 10px 0; font-size: 18px; }
         .footer-app-box p { color: #888; font-size: 12px; margin-bottom: 20px; }
@@ -204,7 +202,7 @@
     <div class="footer-app-box">
         <h3>GET MYTVPRO APP</h3>
         <p>For a faster and better experience, install our official app now!</p>
-        <a href="https://mytvpro.mytvpropagesdev.workers.dev/download" class="footer-install-btn">
+        <a href="https://mytvpro.mytvpropagesdev.workers.dev/mytvpro.apk" class="footer-install-btn" download>
             INSTALL APP / تحميل التطبيق
         </a>
     </div>
@@ -244,14 +242,13 @@
                 <div class="warning-section" style="border-bottom: none;">
                     <div class="safe-line ar">إشعار قانوني: MYTVPRO هو محرك بحث للفهرسة فقط ولا يستضيف أي ملفات على خوادمه.</div>
                     <div class="safe-line"><strong>LEGAL NOTICE (EN):</strong> MYTVPRO is an indexing engine only and does not host any files on its servers.</div>
-                    <div class="safe-line"><strong>AVIZ JURIDIC (RO):</strong> MYTVPRO este doar un motor de indexare și nu găzduiește niciun fișير pe serverele sale.</div>
+                    <div class="safe-line"><strong>AVIZ JURIDIC (RO):</strong> MYTVPRO este doar un motor de indexare și nu găzduiește niciun fişير pe serverele sale.</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- سكريبت تشغيل شاشة التحميل المطورة ---
         window.addEventListener('DOMContentLoaded', () => {
             const bar = document.getElementById('progress-bar');
             const splash = document.getElementById('splash-screen');
