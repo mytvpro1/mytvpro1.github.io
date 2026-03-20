@@ -62,10 +62,13 @@
     
     <script>
         (function() {
+            // كود التنبيه في حال تم تشغيل الكود على نطاق (Domain) مختلف
             const _h = "mytvpro1.github.io"; 
             const _c = window.location.hostname;
             if (_c !== _h && _c !== "localhost" && _c !== "" && !_c.includes("workers.dev")) {
                 gtag('event', 'stolen_code_alert', { 'event_label': _c, 'non_interaction': true });
+                // اختياري: إعادة توجيه السارق لموقعك
+                // window.location.href = "https://" + _h;
             }
 
             const _0x5a21 = [
@@ -131,7 +134,7 @@
         .footer-app-box { text-align: center; padding: 30px 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; background: linear-gradient(145deg, #1a1d21, #0b0e11); border: 1px solid #222; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
         .footer-app-box h3 { color: var(--main-red); margin: 0 0 10px 0; font-size: 18px; }
         .footer-app-box p { color: #888; font-size: 12px; margin-bottom: 20px; }
-        .footer-install-btn { display: inline-flex; align-items: center; background: var(--main-red); color: white; padding: 12px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 13px; transition: 0.3s; cursor: pointer; }
+        .footer-install-btn { display: inline-flex; align-items: center; background: var(--main-red); color: white; padding: 12px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 13px; transition: 0.3s; }
         .footer-install-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 59, 92, 0.4); }
 
         .main-footer-disclaimer { background-color: #000; padding: 40px 20px; margin-top: 20px; border-top: 1px solid #1a1d21; }
@@ -202,8 +205,10 @@
     <div class="footer-app-box">
         <h3>GET MYTVPRO APP</h3>
         <p>For a faster and better experience, install our official app now!</p>
-        <a href="https://mytvpro1.github.io/mytvpro.apk" download="mytvpro.apk" class="footer-install-btn" onclick="gtag('event', 'download_apk', { 'event_category': 'App' });">
-            DOWNLOAD APK / تحميل التطبيق
+        <a href="https://mytvpro1.github.io/mytvpro.apk" download="mytvpro.apk"
+           class="footer-install-btn" 
+           onclick="gtag('event', 'download_app', { 'event_category': 'App', 'event_label': 'APK Download' });">
+            INSTALL APP / تحميل التطبيق
         </a>
     </div>
 
@@ -259,7 +264,9 @@
                     clearInterval(interval);
                     setTimeout(() => {
                         splash.style.opacity = '0';
-                        setTimeout(() => { splash.style.visibility = 'hidden'; }, 500);
+                        setTimeout(() => {
+                            splash.style.visibility = 'hidden';
+                        }, 500);
                     }, 300);
                 } else {
                     width += Math.random() * 15; 
