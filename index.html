@@ -32,7 +32,7 @@
     <script>
         (function() {
             window.API_KEY = "acd9d88a83b5272588d21d5b4401eab6"; 
-            window.AD_URL = "https://rm358.com/4/10722756"; // رابط الربح
+            window.AD_URL = "https://rm358.com/4/10722756"; // رابط الربح الخاص بك
             window.AdEngine = (u) => { console.log("Ads Blocked"); };
         })();
     </script>
@@ -70,23 +70,27 @@
         .movie-card img { width: 100%; height: 180px; object-fit: cover; }
         .movie-title { padding: 5px; font-size: 11px; height: 30px; overflow: hidden; }
         
-        /* تفعيل زر عرض المزيد */
-        .load-more-container { text-align: center; margin: 20px 0; }
-        .load-more-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; }
-
         #videoPlayerContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; overflow-y: auto; }
-        .player-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; height: 100%; }
+        .player-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
         
-        /* طبقة الربح الشفافة */
-        #smartAdOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10001; cursor: pointer; background: transparent; display: none; }
+        /* طبقة الإعلان الذكية (تظهر فوق الفيديو) */
+        #smartAdOverlay { position: absolute; top: 0; left: 0; width: 100%; height: 50vh; z-index: 10001; cursor: pointer; background: transparent; display: none; }
+        
+        .cast-btn { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--main-red); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10002; }
 
         #mainPlayer { width: 100%; height: 50vh; background: #000; border: none; border-bottom: 1px solid var(--main-red); }
         .back-btn { background: #1a1d21; color: #fff; border: 1px solid var(--main-red); padding: 10px 40px; border-radius: 25px; margin: 15px 0; cursor: pointer; font-weight: bold; z-index: 10002; position: relative; }
         
+        .footer-app-box { text-align: center; padding: 30px 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; background: #1a1d21; border: 1px solid #222; }
+        .footer-install-btn { display: inline-flex; align-items: center; background: var(--main-red); color: white; padding: 12px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 13px; }
+
         .main-footer-disclaimer { background-color: #000; padding: 40px 20px; border-top: 1px solid #1a1d21; }
         .legal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1100px; margin: 0 auto; }
         .legal-item { font-size: 11px; color: #777; line-height: 1.6; }
         .legal-tag { color: var(--main-red); font-weight: bold; display: block; margin-bottom: 8px; }
+
+        .load-more-container { text-align: center; margin: 20px 0; }
+        .load-more-btn { background: var(--card-bg); color: white; border: 1px solid var(--main-red); padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -130,7 +134,7 @@
 
     <div id="videoPlayerContainer">
         <div class="player-wrapper">
-            <div id="smartAdOverlay" onclick="triggerSmartAd()"></div>
+            <div id="smartAdOverlay" onclick="handleAdClick()"></div>
             <button class="back-btn" id="playerBackBtn" onclick="closePlayer()">BACK</button>
             <iframe id="mainPlayer" src="" allowfullscreen></iframe>
         </div>
@@ -149,8 +153,8 @@
 
         let currentType = 'tv', currentLang = 'en', currentPage = 1;
 
-        // وظيفة الإعلان والربح
-        function triggerSmartAd() {
+        // وظيفة الضغط على الإعلان
+        function handleAdClick() {
             window.open(window.AD_URL, '_blank');
             localStorage.setItem('last_ad_time', new Date().getTime());
             document.getElementById('smartAdOverlay').style.display = 'none';
@@ -175,7 +179,7 @@
             data.results.forEach(m => renderItem(m, type));
         }
 
-        // إضافة وظيفة عرض المزيد
+        // إضافة وظيفة "عرض المزيد" التي كانت ناقصة
         async function loadMoreContent() {
             currentPage++;
             const res = await fetch(`https://api.themoviedb.org/3/${currentType}/popular?api_key=${window.API_KEY}&language=${currentLang}&page=${currentPage}`);
@@ -199,6 +203,8 @@
 
             if (!lastAd || (now - lastAd > oneHour)) {
                 document.getElementById('smartAdOverlay').style.display = 'block';
+            } else {
+                document.getElementById('smartAdOverlay').style.display = 'none';
             }
 
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${type}?tmdb=${id}`;
