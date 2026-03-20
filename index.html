@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Watch the latest movies and series online for free on MYTVPRO. Global entertainment index.">
+    <meta name="keywords" content="MYTVPRO, مشاهدة أفلام مجانا, مسلسلات أون لاين, أفلام المغرب, EgyBest alternative, watch movies free online">
     <meta name="robots" content="index, follow">
     
     <meta name="geo.region" content="RO" />
@@ -281,7 +282,7 @@
                 try {
                     const res = await fetch(`https://api.themoviedb.org/3/${item.type}/${item.id}?api_key=${window.API_KEY}&language=${currentLang}`);
                     const m = await res.json();
-                    if(m.id) grid.innerHTML += `<div class="movie-card" onclick="openPlayer('${m.id}', '${item.type}')"><img src="https://image.tmdb.org/t/p/w500${m.poster_path}"><div class="movie-title">${m.title || m.name}</div></div>`;
+                    if(m.id) grid.innerHTML += `<div class="movie-card" onclick="openPlayer('${m.id}', '${item.type}')"><img src="https://image.tmdb.org/t/p/w500${m.poster_path}" alt="${m.title || m.name} online free"><div class="movie-title">${m.title || m.name}</div></div>`;
                 } catch(e) {}
             }
             document.getElementById('loadMoreSection').style.display = 'none'; 
@@ -317,15 +318,17 @@
 
         function renderGrid(list) {
             const grid = document.getElementById('moviesGrid');
-            grid.innerHTML += list.map(m => `<div class="movie-card" onclick="openPlayer('${m.id}', '${m.name ? 'tv' : 'movie'}')"><img src="https://image.tmdb.org/t/p/w500${m.poster_path}"><div class="movie-title">${m.title || m.name}</div></div>`).join('');
+            grid.innerHTML += list.map(m => `<div class="movie-card" onclick="openPlayer('${m.id}', '${m.name ? 'tv' : 'movie'}')"><img src="https://image.tmdb.org/t/p/w500${m.poster_path}" alt="${m.title || m.name} free online"><div class="movie-title">${m.title || m.name}</div></div>`).join('');
         }
 
+        // دالة تفعيل الإعلان (تم التعديل هنا)
         function triggerAd() {
             const currentTime = new Date().getTime();
             if(window.AdEngine) { 
                 window.AdEngine("//rm358.com/4/10722756"); 
                 localStorage.setItem('lastAdTimestamp', currentTime); 
             }
+            // إخفاء طبقة الإعلان فوراً للسماح بالوصول لأزرار التحكم (التكبير/الترجمة)
             document.getElementById('adOverlay').style.display = 'none';
         }
 
@@ -333,6 +336,7 @@
             const lastAdTime = localStorage.getItem('lastAdTimestamp');
             const currentTime = new Date().getTime();
             const ninetyMinutes = 90 * 60 * 1000;
+            // التحقق من مرور 90 دقيقة قبل إظهار طبقة الإعلان
             document.getElementById('adOverlay').style.display = (!lastAdTime || (currentTime - lastAdTime > ninetyMinutes)) ? 'block' : 'none';
             document.getElementById('mainPlayer').src = `https://vidsrc.me/embed/${type || currentType}?tmdb=${id}`;
             document.getElementById('videoPlayerContainer').style.display = 'block';
